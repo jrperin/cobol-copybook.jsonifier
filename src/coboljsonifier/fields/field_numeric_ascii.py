@@ -20,7 +20,7 @@ class FieldNumericAscii(Field):
         try:
             self._value = int(data_in[:self._size].strip())
             if self.decimals > 0:
-                self._value = Decimal(self._value / 10 ** self.decimals)
+                self._value = round(Decimal(self._value / 10 ** self.decimals), self.decimals)
         except Exception as e:
             print(e)
             print(f"Erro ao tratar o campo: {self.name} com conteudo: [{data_in[:self._size]}]")
