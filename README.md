@@ -64,8 +64,8 @@ To use the package you need:
 
 2. Build a Parser based on the previous copybook struture extracted.The parser contains python objects that will handle each kind of data field in the Mainframe's file. That file could be eater EBCDI or ASCII.
     > **Note:**  
-    > For ASCII it doesn't support types such as: Binary, COMP3, Signed etc.  
-    > Just suports formats like 'PIC 9(n)', 'PIC X(n)' and Masked 'PIC +99999.99'. These are formats that could be converted in the transfer process like FTP, Connect Dirct etc from mainframe to another platform.
+    > For ASCII it doesn't support types such as: `Binary`, `COMP3`, `Signed` etc.  
+    > Just suports formats like `PIC 9(n)`, `PIC X(n)` and Masked `PIC +99999.99`. These are formats that could be converted in the transfer process like FTP, Connect Dirct etc from mainframe to another platform.
 
 -----
 
