@@ -40,7 +40,7 @@ class FieldNumericEbcdic(Field):
             result += str(low)
         result = int(result) * signal
         if self.decimals > 0:
-            result = Decimal(result / 10 ** self.decimals)
+            result = round(Decimal(result / 10 ** self.decimals), self.decimals)
 
         self._value = result
 

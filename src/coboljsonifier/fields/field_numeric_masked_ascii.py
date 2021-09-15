@@ -14,5 +14,7 @@ class FieldNumericMaskedAscii(Field):
             return
 
         self._value = Decimal(data_in[:self.size])
+        if self.decimals > 0:
+            self._value = round(self._value, self.decimals)
         
         return data_in[self.size:]

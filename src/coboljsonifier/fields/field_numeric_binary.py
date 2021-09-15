@@ -17,9 +17,9 @@ class FieldNumericBinary(Field):
         data = data_in[:self.size]
         result = int.from_bytes(data, "big", signed="True")
         if self.decimals > 0:
-            result = Decimal(result / (10 ** self.decimals))
+            result = round(Decimal(result / (10 ** self.decimals)), self.decimals)
         
         self._value = result
 
-        return data_in[:self.size]
+        return data_in[self.size:]
 

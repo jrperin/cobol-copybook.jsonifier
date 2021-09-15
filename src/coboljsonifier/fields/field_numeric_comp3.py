@@ -33,10 +33,10 @@ class FieldNumericComp3(Field):
 
             # Validacoes de integridade
             if high > 9:
-                raise ValueError(f'{self.name} - Dados inválidos! High value esperado entre 0 e 9. Recebido {high}...')
+                raise ValueError(f'{self.name} - Dados inválidos! High value esperado entre 0 e 9. Recebido {high} - {data}...')
             if cont < len(data) - 1:
                 if low > 9:
-                    raise ValueError(f'{self.name} - Dados inválidos! LOW value esperado entre 0 e 9. Recebido {low}...')
+                    raise ValueError(f'{self.name} - Dados inválidos! LOW value esperado entre 0 e 9. Recebido {low} - - {data}...')
                 result += str(high) + str(low)
             else:
                 # checking signal (C:12:+, D:13-, F:15:no sinal)
@@ -51,7 +51,7 @@ class FieldNumericComp3(Field):
         result = int(result) * signal
 
         if self.decimals > 0:
-            result = Decimal(result / 10 ** self.decimals)
+            result = round(Decimal(result / 10 ** self.decimals), self.decimals)
 
         self._value = result
 
