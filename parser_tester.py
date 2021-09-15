@@ -1,5 +1,4 @@
 import simplejson
-
 from coboljsonifier.copybookextractor import CopybookExtractor
 from coboljsonifier.parser import Parser
 from coboljsonifier.config.parser_type_enum import ParseType
@@ -14,7 +13,7 @@ fname='/home/jrperin/projetos/cobol-copybook.jsonifier/coboljsonifier/tests/test
 dict_structure = CopybookExtractor(fname).dict_book_structure
 
 print(dict_structure)
-exit()
+
 # Mostrar conteudo da estrutura
 # print(f"\nEstrutura do Parser ", "-" * 50)
 # print(simplejson.dumps(dict_structure, indent=2))

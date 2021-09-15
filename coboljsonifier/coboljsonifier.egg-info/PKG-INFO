@@ -1,3 +1,18 @@
+Metadata-Version: 2.1
+Name: coboljsonifier
+Version: 1.0.2
+Summary: Convert cobol copybook to Json and parse data files based on it
+Home-page: https://github.com/jrperin/cobol-copybook.jsonifier
+Author: Joao Roberto Perin
+License: UNKNOWN
+Project-URL: Bug Tracker, https://github.com/jrperin/cobol-copybook.jsonifier/issues
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+
 # Cobol Copybook JSONifier
 
 [CHANGELOG.md](CHANGELOG.md)
@@ -136,3 +151,4 @@ COPY DT00RL
 * [Absolute vs Relative python imports](https://realpython.com/absolute-vs-relative-python-imports/)
 
 * [Python UnitTest](https://pythontesting.net/framework/specify-test-unittest-nosetests-pytest/)
+
