@@ -6,6 +6,8 @@
 
 ## Straight to the point
 
+Take a look at [pypi.org](https://pypi.org/project/coboljsonifier/)
+
 ``` bash
 pip install coboljsonifier
 ```
