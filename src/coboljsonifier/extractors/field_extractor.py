@@ -25,8 +25,12 @@ class FieldExtractor(ABC):
       08) S9(12)V99  - S9\([0-9]+\)V9+         FieldSignalNumeric1Decimals1
       09) S9(12)V9(2) - S9\([0-9]+\)V\([0-9]+\) FieldSignalNumeric1Decimals2
       -[Tipos Numericos Masked ]-------------------------------------------
-      A1) +99999999999999.99
-                       \+9+\.9*\s              FieldNumericMasked1
+      A1)-- +99999999999999.99  [\+|\-]?[9|Z]+\.?[9|Z]* FieldNumericMasked1
+          - +99999999999999
+          - +ZZZZZZZZZZZZZ9.99
+          - ZZZZZZZZZZZZZZ.ZZ
+          - 99999999999999999
+                       
       -[Alfabetico]--------------------------------------------------------
       10) A(12)      - A\([0-9]+\)             FieldAlphabetic
       -[Alfanumerico]------------------------------------------------------
@@ -209,13 +213,15 @@ class FieldSignalNumeric1Decimals2(AbstractFieldExtractor):
 class FieldNumericMasked1(AbstractFieldExtractor):
     def extract(self, book_item: BookItem):
 
-        #(\+9+\.9*)
-        m = re.search(r"^([\+|\-]9+\.9+)$", book_item.format)
+        #([\+|\-]?[9|Z]+\.?[9|Z]*)
+        m = re.search(r"^([\+|\-]?[9|Z]+\.?[9|Z]*)$", book_item.format)
         if m:
-            decimals = m.group(1).split(".")[-1]
             book_item.type = "NUMERIC_MASKED"
             book_item.size = len(m.group(1))
-            book_item.decimals = len(decimals)
+            if m.group(1).find('.') >= 0:
+                decimals = m.group(1).split(".")[-1]
+                book_item.decimals = len(decimals)
+            
             return book_item
         else:
             return super().extract(book_item)

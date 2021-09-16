@@ -9,7 +9,7 @@ dict_structure = CopybookExtractor(bookfname).dict_book_structure
 print(simplejson.dumps(dict_structure))
 
 # Use book structure to build a parser (FLAT_ASCII / BINARY_EBCDIC)
-parser = Parser(dict_structure, ParseType.FLAT_ASCII).parser
+parser = Parser(dict_structure, ParseType.FLAT_ASCII).build()
 size = parser.size
 print("// Registry calculated lenght:", size)
 print("// " + "-" * 70)
@@ -21,7 +21,7 @@ i = 0
     ebcdic file: Open the file with rb "read binary" and f2.read(size)
     ascii file : Open the file with  r "read text" and f2.readline()
 '''
-with open(datafname, 'rb') as f2:
+with open(datafname, 'r') as f2:
     while True:
 
         # ASCII

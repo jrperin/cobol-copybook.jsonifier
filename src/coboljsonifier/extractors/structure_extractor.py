@@ -94,8 +94,17 @@ class SimpleFieldStructureExtractor(AbstractStructureExtractor):
 
         else:
             # Tratamento do formato especial MASKED
-            # 05  VQLBMIG-VS-AMT            PIC +99999999999999.99.
-            m = re.search(r"^.{6}[^(*)]\s*([0-9]+)\s+([\w|-]*)\s+PIC\s+([\+|\-]9+\.9+)\s*\..*$", line)
+            #          05  VQLBMIG-VS-AMT            PIC +99999999999999.99.
+            #          05  VQLBMIG-VS-AMT            PIC +99999999999999 .
+            #          05  VQLBMIG-VS-AMT            PIC +ZZZZZZZZZZZZZ9.99 .
+            #          05  VQLBMIG-VS-AMT            PIC +ZZZZZZZZZZZZZ9 .
+            #          05  VQLBMIG-VS-AMT            PIC +ZZZZZZZZZZZZZZ.ZZ .
+            #          05  VQLBMIG-VS-AMT            PIC +ZZZZZZZZZZZZZZ .
+            #          05  VQLBMIG-VS-AMT            PIC +ZZZZZZZZZZZZZZ .     xxxyy
+            #          05  VQLBMIG-VS-AMT            PIC +ZZZZZZZZZZZZZZ BINARY .     xxxyy
+            #          05  VQLBMIG-VS-AMT            PIC ZZZZZZZZZZZZZZ BINARY .     xxxyy
+            #          05  VQLBMIG-VS-AMT            PIC ZZZZZZZZZZZZZZ.99 BINARY .     xxxyy
+            m = re.search(r"^.{6}[^(*)]\s*([0-9]+)\s+([\w|-]*)\s+PIC\s+([\+|\-]?[9|Z]+\.?[9|Z]*).*\..*$", line)
             if m:
                 field.type = "FIELD"
                 field.level = int(m.group(1))
