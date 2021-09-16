@@ -23,11 +23,7 @@ To use the package you need:
 
 **These data lines parsed into json could be used to create events, call rest apis and what else you can imagine.**
 
-![coboljsonifier image](docs/COBOL_JSONIFIER.svg)
-
-[coboljsonifier image](https://raw.githubusercontent.com/jrperin/cobol-copybook.jsonifier/master/docs/COBOL_JSONIFIER.png)
-
-
+![coboljsonifier image](https://raw.githubusercontent.com/jrperin/cobol-copybook.jsonifier/master/docs/COBOL_JSONIFIER.png)
 
 ----
 
