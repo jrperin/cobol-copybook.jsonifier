@@ -39,16 +39,30 @@ pip install coboljsonifier
 
 Using the package.
 ``` python
-# Import session
+
+import simplejson
 from coboljsonifier.copybookextractor import CopybookExtractor
 from coboljsonifier.parser import Parser
 from coboljsonifier.config.parser_type_enum import ParseType
 
-# . . .
+...
 
 # Extracting copybook structure
 dict_structure = CopybookExtractor(bookfname).dict_book_structure
 
+# Building a Parser
+parser = Parser(dict_structure, ParseType.BINARY_EBCDIC).build()
+
+...
+
+# Parsing the data
+parser.parse(data)
+
+# Getting the result (it is an dict type)
+dictvalue = parser.value
+
+# Showing the result as Json
+print(simplejson.dumps(dictvalue))
 
 ```
 
