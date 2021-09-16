@@ -9,35 +9,33 @@ class FieldExtractor(ABC):
     Chain of responsability para tratar os tipos dos campos.
 
     ===========================================================================
-      TIPOS                                    CLASSES
+      TYPES                                    CLASSES
     ===========================================================================
-      -[Vazio]-------------------------------------------------------------
-      00  Conteúdo Vazio                       Fieldempty
-      -[Tipos Numericos sem sina]------------------------------------------
-      01) 9          - 9+                      FieldSimpleNumeric
-      02) 9V99       - 9+V9+                   FieldSimpleNumericDecimals1
-      03) 9V9(2)     - 9+V9\([0-9]+\)          FieldSimpleNumericDecimals2
-      04) 9(12)      - 9\([0-9]+\)             FieldSimpleNumeric1
-      05) 9(12)V99   - 9\([0-9]+\)V9+          FieldSimpleNumeric1Decimals1
-      06) 9(12)V9(2) - 9\([0-9]+\)V\([0-9]+\)  FieldSimpleNumeric1Decimals2
-      -[Tipos Numericos com sinal]-----------------------------------------
-      07) S9(12)     - S9\([0-9]+\)            FieldSignalNumeric1
-      08) S9(12)V99  - S9\([0-9]+\)V9+         FieldSignalNumeric1Decimals1
+      -[Vazio]--------------------------------------------------------------
+      00  Empty Content                        Fieldempty
+      -[Numeric Types without signal]---------------------------------------
+      01) 9          - 9+                       FieldSimpleNumeric
+      02) 9V99       - 9+V9+                    FieldSimpleNumericDecimals1
+      03) 9V9(2)     - 9+V9\([0-9]+\)           FieldSimpleNumericDecimals2
+      04) 9(12)      - 9\([0-9]+\)              FieldSimpleNumeric1
+      05) 9(12)V99   - 9\([0-9]+\)V9+           FieldSimpleNumeric1Decimals1
+      06) 9(12)V9(2) - 9\([0-9]+\)V\([0-9]+\)   FieldSimpleNumeric1Decimals2
+      -[Numeric Types with signal]------------------------------------------
+      07) S9(12)     - S9\([0-9]+\)             FieldSignalNumeric1
+      08) S9(12)V99  - S9\([0-9]+\)V9+          FieldSignalNumeric1Decimals1
       09) S9(12)V9(2) - S9\([0-9]+\)V\([0-9]+\) FieldSignalNumeric1Decimals2
-      -[Tipos Numericos Masked ]-------------------------------------------
-      A1)-- +99999999999999.99  [\+|\-]?[9|Z]+\.?[9|Z]* FieldNumericMasked1
-          - +99999999999999
+      -[Masked Numeric Types]-----------------------------------------------
+      A1)-- +99999999999999.99  [\+|\-]?[9|Z]+\.?[9|Z]* 
+          - +99999999999999                     FieldNumericMasked1
           - +ZZZZZZZZZZZZZ9.99
           - ZZZZZZZZZZZZZZ.ZZ
           - 99999999999999999
-                       
-      -[Alfabetico]--------------------------------------------------------
-      10) A(12)      - A\([0-9]+\)             FieldAlphabetic
-      -[Alfanumerico]------------------------------------------------------
-      11) X(12)      - X\([0-9]+\)             FieldAlphanumeric
-      -[undefined]---------------------------------------------------------
-      12) Nenhum dos anteriores                FieldUndefined
-      
+      -[Alphabetic]---------------------------------------------------------
+      10) A(12)      - A\([0-9]+\)              FieldAlphabetic
+      -[Alphanumeric]-------------------------------------------------------
+      11) X(12)      - X\([0-9]+\)              FieldAlphanumeric
+      -[Undefined]---------------------------------------------------------
+      12) None of the above                     FieldUndefined
     ===========================================================================
   
     '''

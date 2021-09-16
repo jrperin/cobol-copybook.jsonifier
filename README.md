@@ -65,6 +65,13 @@ dictvalue = parser.value
 print(simplejson.dumps(dictvalue))
 
 ```
+The result will be like that:
+
+``` json
+{"DATA1-REGISTRY-TYPE": 2, "DATA1-COMPANY": 4, "DATA1-USER-ACCOUNT": "0040000000090001111", "DATA1-BIRTH-DATE": "1971-01-21", "DATA1-NAME": "JOHN ROBERT PERIN", "DATA1-CREDIT-LIMIT": 1001, "DATA1-LIMIT-USED": -1000.10, "DATA1-STATUS": [{"DATA1-STATUS-FLAG": "1"}, {"DATA1-STATUS-FLAG": "2"}, {"DATA1-STATUS-FLAG": "3"}, {"DATA1-STATUS-FLAG": "4"}], "FILLER-1": null}
+```
+
+## Take a Look at Examples
 
 Use the script `examples/prepare_test.py` to generate files that will be used by test scripts.
 
@@ -102,12 +109,6 @@ $ pip install -r requirements.txt
 
 ## Testing
 
-**Undestanding the use with:** `'parser_tester.py'`
-
-``` bash
-$ python parser_tester.py
-```
-
 **Unit Tests:**
 ``` bash
 # Running only the unittest
@@ -120,18 +121,42 @@ $ coverage html
 ```
 
 
-**Cobol Copybook Example**
+## Apopendix
 
-``` cobol 
-COPY DT00RL
-002200 01 :DT00:-RECORD.                                 
-002300    03 :DT00:-KEY.                                
-002400       05 :DT00:-ORG-ACCT.                       
-002500           07 :DT00:-ORG  PIC 999.               
-002600           07 :DT00:-ACCT PIC X(19).             
-002700       05  :DT00:-STMT-ID-CODE                    
-002800                           PIC S9(7)  BINARY.
+Table of types treated by CobolJsonifier
 
+```
+    =======================================================================================
+      TYPES                             CLASSES                          EBCDIC  ASCII     
+    =======================================================================================
+      -[Vazio]--------------------------------------------------------------------------   
+      00  Empty Content                 Fieldempty                        yes     yes      
+      -[Numeric Types without signal]---------------------------------------------------   
+      01) 9                             FieldSimpleNumeric                yes     yes      
+      02) 9V99                          FieldSimpleNumericDecimals1       yes     yes      
+      03) 9V9(2)                        FieldSimpleNumericDecimals2       yes     yes      
+      04) 9(12)                         FieldSimpleNumeric1               yes     yes      
+      05) 9(12)V99                      FieldSimpleNumeric1Decimals1      yes     yes      
+      06) 9(12)V9(2)                    FieldSimpleNumeric1Decimals2      yes     yes      
+      -[Numeric Types with signal]------------------------------------------------------   
+      07) S9(12)       [BINARY/COMP3]   FieldSignalNumeric1               yes     no       
+      08) S9(12)V99    [BINARY/COMP3]   FieldSignalNumeric1Decimals1      yes     no       
+      09) S9(12)V9(2)  [BINARY/COMP3]   FieldSignalNumeric1Decimals2      yes     no       
+      -[Masked Numeric Types]-----------------------------------------------------------   
+      A1) +99999999999999.99            FieldNumericMasked1               no      yes      
+          -99999999999999.99                                                               
+          +99999999999999                                                                  
+          +ZZZZZZZZZZZZZ9.99                                                               
+          -ZZZZZZZZZZZZZ9.99        (Note: These are just                                  
+           ZZZZZZZZZZZZZZ.ZZ                       some examples)                          
+           99999999999999999                                                               
+      -[Alphabetic]---------------------------------------------------------------------   
+      10) A(12)                         FieldAlphabetic                   yes     yes      
+      -[Alphanumeric]-------------------------------------------------------------------   
+      11) X(12)                         FieldAlphanumeric                 yes     yes      
+      -[Undefined]----------------------------------------------------------------------   
+      12) None of the above             FieldUndefined                    yes     yes      
+    =======================================================================================
 ```
 
 ## References
