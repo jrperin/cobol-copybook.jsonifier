@@ -6,4 +6,4 @@ htmlcov/
 dist/
 .C4Z
 test_files/OLD/
-
+coboljsonifier.egg-info/
