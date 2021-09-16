@@ -4,4 +4,6 @@ __pycache__/
 htmlcov/
 .coverage
 dist/
+.C4Z
+test_files/OLD/
 
