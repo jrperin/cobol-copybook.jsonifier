@@ -23,6 +23,9 @@ class Parser:
         main_node = FieldWrapper()
         self.parser = self._create(main_node, self._book_structure)
 
+    def build(self):
+        return self.parser
+
     def _create(self, parent: Field, book_structure):
 
         '''

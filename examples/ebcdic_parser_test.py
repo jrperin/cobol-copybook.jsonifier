@@ -9,7 +9,7 @@ dict_structure = CopybookExtractor(bookfname).dict_book_structure
 print(simplejson.dumps(dict_structure))
 
 # Use book structure to build a parser (FLAT_ASCII / BINARY_EBCDIC)
-parser = Parser(dict_structure, ParseType.BINARY_EBCDIC).parser
+parser = Parser(dict_structure, ParseType.BINARY_EBCDIC).build()
 size = parser.size
 print("// Registry calculated lenght:", size)
 print("// " + "-" * 70)
