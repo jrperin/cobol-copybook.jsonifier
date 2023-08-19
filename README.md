@@ -157,7 +157,8 @@ Table of types treated by CobolJsonifier
       -[Alphanumeric]-------------------------------------------------------------------   
       11) X(12)                         FieldAlphanumeric                 yes     yes      
       -[Undefined]----------------------------------------------------------------------   
-      12) None of the above             FieldUndefined                    yes     yes      
+      12) None of the above             FieldUndefined                    yes     yes 
+      13) S9(10)V                       FieldSignalNumeric1Decimals3      yes     yes
     =======================================================================================
 ```
 
