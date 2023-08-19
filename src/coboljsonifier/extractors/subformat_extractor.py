@@ -2,7 +2,6 @@ from abc import ABC, abstractmethod
 
 from .book_item import BookItem
 
-
 class SubformatExtractor(ABC):
     @abstractmethod
     def set_next(self, extractor):

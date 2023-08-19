@@ -3,7 +3,6 @@ from abc import ABC, abstractmethod
 
 from .book_item import BookItem
 
-
 class FieldExtractor(ABC):
     '''
     Chain of responsability para tratar os tipos dos campos.
@@ -31,6 +30,7 @@ class FieldExtractor(ABC):
           - ZZZZZZZZZZZZZZ.ZZ
           - 99999999999999999
       -[Alphabetic]---------------------------------------------------------
+      A2) S9(10)V                               FieldSignalNumeric1Decimals3
       10) A(12)      - A\([0-9]+\)              FieldAlphabetic
       -[Alphanumeric]-------------------------------------------------------
       11) X(12)      - X\([0-9]+\)              FieldAlphanumeric
@@ -224,6 +224,18 @@ class FieldNumericMasked1(AbstractFieldExtractor):
         else:
             return super().extract(book_item)
 
+# A2
+class FieldSignalNumeric1Decimals3(AbstractFieldExtractor):
+    def extract(self, book_item: BookItem):
+        m = re.search(r"^S9\(([0-9]+)\)V$", book_item.format)
+        if m:
+            book_item.type = "NUMERIC"
+            book_item.size = int(m.group(1))
+            book_item.decimals = 0
+            return book_item
+        else:
+            return super().extract(book_item)
+
 # 10
 class FieldAlphabetic(AbstractFieldExtractor):
     def extract(self, book_item: BookItem):
@@ -249,9 +261,7 @@ class FieldAlphanumeric(AbstractFieldExtractor):
         else:
             return super().extract(book_item)
 
-
 # 12
 class FieldUndefined(AbstractFieldExtractor):
     def extract(self, book_item: BookItem):
         raise Exception(f"ERRO ao processar field \n\t==> [{book_item.format}]")
-
