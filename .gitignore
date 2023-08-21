@@ -5,5 +5,5 @@ htmlcov/
 .coverage
 dist/
 .C4Z
-test_files/OLD/
+tests/test_files/OLD/
 coboljsonifier.egg-info/
