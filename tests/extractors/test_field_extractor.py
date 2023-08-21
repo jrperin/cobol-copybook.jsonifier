@@ -1,4 +1,8 @@
 import unittest
+import sys
+
+sys.path.append("./src/")
+sys.path.append("./src/coboljsonifier/")
 
 from coboljsonifier.extractors.book_item import BookItem
 from coboljsonifier.extractors.field_extractor import   FieldEmpty, FieldSimpleNumeric1Decimals2, FieldSimpleNumericDecimals1, FieldSimpleNumericDecimals2, \
@@ -52,11 +56,11 @@ class TestFieldExtractor(unittest.TestCase):
     signal_numeric1_decimals2.format = "S9(3)V9(2)"
 
     # 10
-    simple_numeric1_decimals3 = BookItem( )
-    simple_numeric1_decimals3.type = "NUMERIC"
-    simple_numeric1_decimals3.level = "3"
-    simple_numeric1_decimals3.name = "BOOK-SIMPLE-NUMERIC1-DECIMALS2"
-    simple_numeric1_decimals3.format = "9(10)V"
+    signal_numeric1_decimals3 = BookItem( )
+    signal_numeric1_decimals3.type = "NUMERIC"
+    signal_numeric1_decimals3.level = "3"
+    signal_numeric1_decimals3.name = "BOOK-SIGNAL-NUMERIC1-DECIMALS3"
+    signal_numeric1_decimals3.format = "S9(10)V"
 
     # A01
     signal_numeric_masked1 = BookItem( )
@@ -112,7 +116,7 @@ class TestFieldExtractor(unittest.TestCase):
     # 10
     def test_field_signal_numeric1_decimals3(self):
         self.assertEqual(FieldSignalNumeric1Decimals3().extract(self.signal_numeric1_decimals3).size, 10)
-        self.assertEqual(FieldSignalNumeric1Decimals3().extract(self.signal_numeric1_decimals3).decimals, 3)
+        self.assertEqual(FieldSignalNumeric1Decimals3().extract(self.signal_numeric1_decimals3).decimals, 0)
 
     # A01
     def test_field_numeric_masked1(self):
