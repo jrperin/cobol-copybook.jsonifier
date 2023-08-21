@@ -51,28 +51,28 @@ class TestFieldExtractor(unittest.TestCase):
     signal_numeric1_decimals2.name = "BOOK-SIGNAL-NUMERIC1-DECIMALS2"
     signal_numeric1_decimals2.format = "S9(3)V9(2)"
 
-    # A1
-    signal_numeric_masked1 = BookItem( )
-    signal_numeric_masked1.type = "NUMERIC"
-    signal_numeric_masked1.level = "3"
-    signal_numeric_masked1.name = "BOOK-SIGNAL-NUMERIC-MASKED1"
-    signal_numeric_masked1.format = "+99999999999999.99"
-
-    # A2
+    # 10
     simple_numeric1_decimals3 = BookItem( )
     simple_numeric1_decimals3.type = "NUMERIC"
     simple_numeric1_decimals3.level = "3"
     simple_numeric1_decimals3.name = "BOOK-SIMPLE-NUMERIC1-DECIMALS2"
     simple_numeric1_decimals3.format = "9(10)V"
 
-    # 10
+    # A01
+    signal_numeric_masked1 = BookItem( )
+    signal_numeric_masked1.type = "NUMERIC"
+    signal_numeric_masked1.level = "3"
+    signal_numeric_masked1.name = "BOOK-SIGNAL-NUMERIC-MASKED1"
+    signal_numeric_masked1.format = "+99999999999999.99"
+
+    # A02
     alphabetic = BookItem( )
     alphabetic.type = "NUMERIC"
     alphabetic.level = "3"
     alphabetic.name = "BOOK-ALPHABETIC"
     alphabetic.format = "A(12)"
 
-    # 11
+    # A03
     alphanumeric = BookItem( )
     alphanumeric.type = "NUMERIC"
     alphanumeric.level = "3"
@@ -109,27 +109,28 @@ class TestFieldExtractor(unittest.TestCase):
         self.assertEqual(FieldSignalNumeric1Decimals2().extract(self.signal_numeric1_decimals2).size, 5)
         self.assertEqual(FieldSignalNumeric1Decimals2().extract(self.signal_numeric1_decimals2).decimals, 2)
 
-    # A1
-    def test_field_numeric_masked1(self):
-        self.assertEqual(FieldNumericMasked1().extract(self.signal_numeric_masked1).size, 18)
-        self.assertEqual(FieldNumericMasked1().extract(self.signal_numeric_masked1).decimals, 2)
-
-    # A2
+    # 10
     def test_field_signal_numeric1_decimals3(self):
         self.assertEqual(FieldSignalNumeric1Decimals3().extract(self.signal_numeric1_decimals3).size, 10)
         self.assertEqual(FieldSignalNumeric1Decimals3().extract(self.signal_numeric1_decimals3).decimals, 3)
 
-    # 10
+    # A01
+    def test_field_numeric_masked1(self):
+        self.assertEqual(FieldNumericMasked1().extract(self.signal_numeric_masked1).size, 18)
+        self.assertEqual(FieldNumericMasked1().extract(self.signal_numeric_masked1).decimals, 2)
+
+
+    # A02
     def test_field_alphabetic(self):
         self.assertEqual(FieldAlphabetic().extract(self.alphabetic).size, 12)
         self.assertEqual(FieldAlphabetic().extract(self.alphabetic).decimals, 0)
 
-    # 11
+    # A03
     def test_field_alphanumeric(self):
         self.assertEqual(FieldAlphanumeric().extract(self.alphanumeric).size, 12)
         self.assertEqual(FieldAlphanumeric().extract(self.alphanumeric).decimals, 0)
 
-    # 12
+    # 999
     def test_field_undefined(self):
         self.assertRaises(Exception, FieldUndefined().extract, self.bookitem_empty)
 
