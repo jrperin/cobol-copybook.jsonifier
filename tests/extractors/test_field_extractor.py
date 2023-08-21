@@ -2,8 +2,8 @@ import unittest
 
 from coboljsonifier.extractors.book_item import BookItem
 from coboljsonifier.extractors.field_extractor import   FieldEmpty, FieldSimpleNumeric1Decimals2, FieldSimpleNumericDecimals1, FieldSimpleNumericDecimals2, \
-                                                        FieldSimpleNumeric1Decimals2, FieldSignalNumeric1Decimals1, FieldSignalNumeric1Decimals2, \
-                                                        FieldNumericMasked1, FieldAlphabetic, FieldAlphanumeric, FieldUndefined
+                                                        FieldSignalNumeric1Decimals3, FieldSimpleNumeric1Decimals2, FieldSignalNumeric1Decimals1, \
+                                                        FieldSignalNumeric1Decimals2, FieldNumericMasked1, FieldAlphabetic, FieldAlphanumeric, FieldUndefined
 
 
 class TestFieldExtractor(unittest.TestCase):
@@ -58,6 +58,13 @@ class TestFieldExtractor(unittest.TestCase):
     signal_numeric_masked1.name = "BOOK-SIGNAL-NUMERIC-MASKED1"
     signal_numeric_masked1.format = "+99999999999999.99"
 
+    # A2
+    simple_numeric1_decimals3 = BookItem( )
+    simple_numeric1_decimals3.type = "NUMERIC"
+    simple_numeric1_decimals3.level = "3"
+    simple_numeric1_decimals3.name = "BOOK-SIMPLE-NUMERIC1-DECIMALS2"
+    simple_numeric1_decimals3.format = "9(10)V"
+
     # 10
     alphabetic = BookItem( )
     alphabetic.type = "NUMERIC"
@@ -107,6 +114,11 @@ class TestFieldExtractor(unittest.TestCase):
         self.assertEqual(FieldNumericMasked1().extract(self.signal_numeric_masked1).size, 18)
         self.assertEqual(FieldNumericMasked1().extract(self.signal_numeric_masked1).decimals, 2)
 
+    # A2
+    def test_field_signal_numeric1_decimals3(self):
+        self.assertEqual(FieldSignalNumeric1Decimals3().extract(self.signal_numeric1_decimals3).size, 10)
+        self.assertEqual(FieldSignalNumeric1Decimals3().extract(self.signal_numeric1_decimals3).decimals, 3)
+
     # 10
     def test_field_alphabetic(self):
         self.assertEqual(FieldAlphabetic().extract(self.alphabetic).size, 12)
@@ -120,7 +132,6 @@ class TestFieldExtractor(unittest.TestCase):
     # 12
     def test_field_undefined(self):
         self.assertRaises(Exception, FieldUndefined().extract, self.bookitem_empty)
-
 
 if __name__ == '__main__':
     unittest.main()
