@@ -113,6 +113,9 @@ $ pip install -r requirements.txt
 
 **Unit Tests:**
 ``` bash
+# Note: Run the tests from main folter of the project
+# Ex.: cd cobol-copybook.jsonifier/
+
 # Running only the unittest
 $ python -m unittest discover
 
