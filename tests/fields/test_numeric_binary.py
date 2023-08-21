@@ -1,5 +1,5 @@
 import unittest
-
+from decimal import Decimal
 from coboljsonifier.fields.field_numeric_binary import FieldNumericBinary
 
 
@@ -12,25 +12,25 @@ class TestFieldNumericBinary(unittest.TestCase):
 
     def test_parsing(self):
 
-        # Testa valor 00123 sem casas decimais
+        # Testing value 00123 without decimal places
         binary_positive=FieldNumericBinary('NUMERIC_BINARY', 'FIELD-NUMERIC-BINARY', 4, 0)
         binary_positive.parse(self.binary_123)
         self.assertEqual(binary_positive.value, {'FIELD-NUMERIC-BINARY' : 123})
 
-        # Testa valor negativo -00123 sem casas decimais
+        # Testing negative value -00123 without decimal places
         binary_negative=FieldNumericBinary('NUMERIC_BINARY', 'FIELD-NUMERIC-BINARY', 4, 0)
         binary_negative.parse(self.binary_negative_123)
         self.assertEqual(binary_negative.value, {'FIELD-NUMERIC-BINARY': -123})
         
-        # Testa valor 00123 com 2 casas decimais
+        # Testing value 00123 with 2 decimal places
         binary_positive_decimals = FieldNumericBinary('NUMERIC_BINARY', 'FIELD-NUMERIC-BINARY', 4, 2)
         binary_positive_decimals.parse(self.binary_123)
-        self.assertEqual(binary_positive_decimals.value, {'FIELD-NUMERIC-BINARY': 1.23})
+        self.assertEqual(binary_positive_decimals.value, {'FIELD-NUMERIC-BINARY': Decimal('1.23')})
         
-        # Testa valor negativo -00123 com 2 casas decimais
+        # Testing negative value -00123 with 2 decimal places
         binary_negative_decimals = FieldNumericBinary('NUMERIC_BINARY', 'FIELD-NUMERIC-BINARY', 4, 2)
         binary_negative_decimals.parse(self.binary_negative_123)
-        self.assertEqual(binary_negative_decimals.value, {'FIELD-NUMERIC-BINARY': -1.23})
+        self.assertEqual(binary_negative_decimals.value, {'FIELD-NUMERIC-BINARY': Decimal("-1.23")})
 
 if __name__ == '__main__':
     unittest.main()
