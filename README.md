@@ -126,7 +126,7 @@ $ coverage html
 ```
 
 
-## Apopendix
+## Appendix
 
 Table of types treated by CobolJsonifier
 
