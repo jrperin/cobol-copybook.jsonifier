@@ -2,7 +2,7 @@ import re
 from abc import ABC, abstractmethod
 
 from ..fields.field import Field
-
+from pdb import set_trace
 
 class StructureExtractor(ABC):
     '''
@@ -123,6 +123,7 @@ class SubformatStructureExtractor(AbstractStructureExtractor):
         # 05  VQBE-DAT-INI-ENDR             PIC S9(07) BINARY.
         # 05  VQBE-DAT-INI-ENDR             PIC S9(07) COMP.
         # 05  VQBE-DAT-INI-ENDR             PIC S9(07) USAGE COMP-3. <-- USAGE nao previsto...
+        set_trace()
         line = line.replace("USAGE", "").replace("usage", "")
         m = re.search(r"^.{6}[^(*)]\s*([0-9]+)\s+([\w|-]*)\s+PIC\s+([\w|\(|\)]*)\s+([\w|-]*)\s*\..*$", line)
         if m:
