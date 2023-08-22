@@ -13,6 +13,7 @@ class FieldExtractor(ABC):
       -[Vazio]--------------------------------------------------------------
       00  Empty Content                        Fieldempty
       -[Numeric Types without signal]---------------------------------------
+<<<<<<< HEAD:src/coboljsonifier/extractors/field_extractor.py
       01) 9          - 9+                       FieldSimpleNumeric
       02) 9V99       - 9+V9+                    FieldSimpleNumericDecimals1
       03) 9V9(2)     - 9+V9\([0-9]+\)           FieldSimpleNumericDecimals2
@@ -36,6 +37,31 @@ class FieldExtractor(ABC):
       11) X(12)      - X\([0-9]+\)              FieldAlphanumeric
       -[Undefined]---------------------------------------------------------
       12) None of the above                     FieldUndefined
+=======
+      01) 9           - 9+                       FieldSimpleNumeric
+      02) 9V99        - 9+V9+                    FieldSimpleNumericDecimals1
+      03) 9V9(2)      - 9+V9\([0-9]+\)           FieldSimpleNumericDecimals2
+      04) 9(12)       - 9\([0-9]+\)              FieldSimpleNumeric1
+      05) 9(12)V99    - 9\([0-9]+\)V9+           FieldSimpleNumeric1Decimals1
+      06) 9(12)V9(2)  - 9\([0-9]+\)V\([0-9]+\)   FieldSimpleNumeric1Decimals2
+      -[Numeric Types with signal]------------------------------------------
+      07) S9(12)      - S9\([0-9]+\)             FieldSignalNumeric1
+      08) S9(12)V99   - S9\([0-9]+\)V9+          FieldSignalNumeric1Decimals1
+      09) S9(12)V9(2) - S9\([0-9]+\)V\([0-9]+\)  FieldSignalNumeric1Decimals2
+      10) S9(10)V     - S9\(([0-9]+)\)V$         FieldSignalNumeric1Decimals3
+      -[Masked Numeric Types]-----------------------------------------------
+      A01) +99999999999999.99  [\+|\-]?[9|Z]+\.?[9|Z]* 
+           +99999999999999                       FieldNumericMasked1
+           +ZZZZZZZZZZZZZ9.99
+           ZZZZZZZZZZZZZZ.ZZ
+           99999999999999999
+      -[Alphabetic]---------------------------------------------------------
+      A02) A(12)      - A\([0-9]+\)              FieldAlphabetic
+      -[Alphanumeric]-------------------------------------------------------
+      A03) X(12)      - X\([0-9]+\)              FieldAlphanumeric
+      -[Undefined]---------------------------------------------------------
+      999) None of the above                     FieldUndefined
+>>>>>>> 7aefd72956e3c26456327dcd222723a04a115bf3:coboljsonifier/extractors/field_extractor.py
     ===========================================================================
   
     '''
@@ -207,7 +233,19 @@ class FieldSignalNumeric1Decimals2(AbstractFieldExtractor):
         else:
             return super().extract(book_item)
 
-# A1 
+# 10
+class FieldSignalNumeric1Decimals3(AbstractFieldExtractor):
+    def extract(self, book_item: BookItem):
+        m = re.search(r"^S9\(([0-9]+)\)V$", book_item.format)
+        if m:
+            book_item.type = "NUMERIC"
+            book_item.size = int(m.group(1))
+            book_item.decimals = 0
+            return book_item
+        else:
+            return super().extract(book_item)
+
+# A01 
 class FieldNumericMasked1(AbstractFieldExtractor):
     def extract(self, book_item: BookItem):
 
@@ -220,6 +258,7 @@ class FieldNumericMasked1(AbstractFieldExtractor):
                 decimals = m.group(1).split(".")[-1]
                 book_item.decimals = len(decimals)
             
+<<<<<<< HEAD:src/coboljsonifier/extractors/field_extractor.py
             return book_item
         else:
             return super().extract(book_item)
@@ -232,11 +271,15 @@ class FieldSignalNumeric1Decimals3(AbstractFieldExtractor):
             book_item.type = "NUMERIC"
             book_item.size = int(m.group(1))
             book_item.decimals = 0
+=======
+>>>>>>> 7aefd72956e3c26456327dcd222723a04a115bf3:coboljsonifier/extractors/field_extractor.py
             return book_item
         else:
             return super().extract(book_item)
 
-# 10
+
+
+# A02
 class FieldAlphabetic(AbstractFieldExtractor):
     def extract(self, book_item: BookItem):
         m = re.search(r"^A\(([0-9]+)\)$", book_item.format)
@@ -249,7 +292,7 @@ class FieldAlphabetic(AbstractFieldExtractor):
             return super().extract(book_item)
 
 
-# 11
+# A03
 class FieldAlphanumeric(AbstractFieldExtractor):
     def extract(self, book_item: BookItem):
         m = re.search(r"^X\(([0-9]+)\)$", book_item.format)
@@ -261,7 +304,11 @@ class FieldAlphanumeric(AbstractFieldExtractor):
         else:
             return super().extract(book_item)
 
+<<<<<<< HEAD:src/coboljsonifier/extractors/field_extractor.py
 # 12
+=======
+# 999
+>>>>>>> 7aefd72956e3c26456327dcd222723a04a115bf3:coboljsonifier/extractors/field_extractor.py
 class FieldUndefined(AbstractFieldExtractor):
     def extract(self, book_item: BookItem):
         raise Exception(f"ERRO ao processar field \n\t==> [{book_item.format}]")

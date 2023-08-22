@@ -113,6 +113,9 @@ $ pip install -r requirements.txt
 
 **Unit Tests:**
 ``` bash
+# Note: Run the tests from main folter of the project
+# Ex.: cd cobol-copybook.jsonifier/
+
 # Running only the unittest
 $ python -m unittest discover
 
@@ -123,7 +126,7 @@ $ coverage html
 ```
 
 
-## Apopendix
+## Appendix
 
 Table of types treated by CobolJsonifier
 
@@ -132,33 +135,34 @@ Table of types treated by CobolJsonifier
       TYPES                             CLASSES                          EBCDIC  ASCII     
     =======================================================================================
       -[Empty]--------------------------------------------------------------------------   
-      00  Empty Content                 Fieldempty                        yes     yes      
+      1)   Empty Content                 Fieldempty                        yes     yes      
       -[Numeric Types without signal]---------------------------------------------------   
-      01) 9                             FieldSimpleNumeric                yes     yes      
-      02) 9V99                          FieldSimpleNumericDecimals1       yes     yes      
-      03) 9V9(2)                        FieldSimpleNumericDecimals2       yes     yes      
-      04) 9(12)                         FieldSimpleNumeric1               yes     yes      
-      05) 9(12)V99                      FieldSimpleNumeric1Decimals1      yes     yes      
-      06) 9(12)V9(2)                    FieldSimpleNumeric1Decimals2      yes     yes      
+      2)   9                             FieldSimpleNumeric                yes     yes      
+      3)   9V99                          FieldSimpleNumericDecimals1       yes     yes      
+      4)   9V9(2)                        FieldSimpleNumericDecimals2       yes     yes      
+      5)   9(12)                         FieldSimpleNumeric1               yes     yes      
+      6)   9(12)V99                      FieldSimpleNumeric1Decimals1      yes     yes      
+      7)   9(12)V9(2)                    FieldSimpleNumeric1Decimals2      yes     yes      
       -[Numeric Types with signal]------------------------------------------------------   
-      07) S9(12)       [BINARY/COMP3]   FieldSignalNumeric1               yes     no       
-      08) S9(12)V99    [BINARY/COMP3]   FieldSignalNumeric1Decimals1      yes     no       
-      09) S9(12)V9(2)  [BINARY/COMP3]   FieldSignalNumeric1Decimals2      yes     no       
+      8)   S9(12)       [BINARY/COMP3]   FieldSignalNumeric1               yes     no       
+      9)   S9(12)V99    [BINARY/COMP3]   FieldSignalNumeric1Decimals1      yes     no       
+      10)  S9(12)V9(2)  [BINARY/COMP3]   FieldSignalNumeric1Decimals2      yes     no       
+      10)  S9(12)V      [BINARY/COMP3]   FieldSignalNumeric1Decimals3      yes     no
       -[Masked Numeric Types]-----------------------------------------------------------   
-      A1) +99999999999999.99            FieldNumericMasked1               no      yes      
-          -99999999999999.99                                                               
-          +99999999999999                                                                  
-          +ZZZZZZZZZZZZZ9.99                                                               
-          -ZZZZZZZZZZZZZ9.99        (Note: These are just                                  
-           ZZZZZZZZZZZZZZ.ZZ                       some examples)                          
-           99999999999999999                                                               
+      A01) +99999999999999.99            FieldNumericMasked1               no      yes      
+           -99999999999999.99                                                               
+           +99999999999999                                                                  
+           +ZZZZZZZZZZZZZ9.99                                                               
+           -ZZZZZZZZZZZZZ9.99        (Note: These are just                                  
+            ZZZZZZZZZZZZZZ.ZZ                       some examples)                          
+            99999999999999999                                                               
       -[Alphabetic]---------------------------------------------------------------------   
-      10) A(12)                         FieldAlphabetic                   yes     yes      
+      A02) A(12)                         FieldAlphabetic                   yes     yes      
       -[Alphanumeric]-------------------------------------------------------------------   
-      11) X(12)                         FieldAlphanumeric                 yes     yes      
+      A03) X(12)                         FieldAlphanumeric                 yes     yes      
       -[Undefined]----------------------------------------------------------------------   
-      12) None of the above             FieldUndefined                    yes     yes 
-      13) S9(10)V                       FieldSignalNumeric1Decimals3      yes     yes
+      11)  None of the above             FieldUndefined                    yes     yes 
+>>>>>>> 7aefd72956e3c26456327dcd222723a04a115bf3
     =======================================================================================
 ```
 
