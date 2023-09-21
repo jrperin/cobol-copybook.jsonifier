@@ -5,5 +5,9 @@ htmlcov/
 .coverage
 dist/
 .C4Z
+<<<<<<< HEAD
 test_files/OLD/
+=======
+tests/test_files/OLD/
+>>>>>>> 7aefd72956e3c26456327dcd222723a04a115bf3
 coboljsonifier.egg-info/

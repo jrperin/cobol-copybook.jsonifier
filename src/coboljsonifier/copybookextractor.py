@@ -1,19 +1,19 @@
 import os.path
 import re
 from typing import List
-
 from coboljsonifier.extractors.book_item import BookItem
+from pdb import set_trace
+
 from coboljsonifier.extractors.field_extractor import   FieldAlphabetic, FieldAlphanumeric, FieldArray, FieldEmpty, \
                                                         FieldGroup, FieldNumericMasked1, FieldSignalNumeric1, \
                                                         FieldSignalNumeric1Decimals1, FieldSignalNumeric1Decimals2, \
-                                                        FieldSimpleNumeric, FieldSimpleNumeric1, FieldSimpleNumeric1Decimals1, \
-                                                        FieldSimpleNumeric1Decimals2, FieldSimpleNumericDecimals1, \
-                                                        FieldSimpleNumericDecimals2, FieldUndefined
+                                                        FieldSignalNumeric1Decimals3, FieldSimpleNumeric, FieldSimpleNumeric1, \
+                                                        FieldSimpleNumeric1Decimals1, FieldSimpleNumeric1Decimals2, \
+                                                        FieldSimpleNumericDecimals1, FieldSimpleNumericDecimals2, FieldUndefined
 from coboljsonifier.extractors.structure_extractor import   ArrayStructureExtractor, GroupStructureExtractor, RedefinesStructureExtractor, \
                                                             SimpleFieldStructureExtractor, SubformatStructureExtractor, \
                                                             UndefinedStructureExtractor
 from coboljsonifier.extractors.subformat_extractor import BookItem, SubformatBinary, SubformatComp3, SubformatEmpty, SubformatUndefined
-
 
 class CopybookExtractor:
 
@@ -81,6 +81,7 @@ class CopybookExtractor:
         field_signal_numeric1 = FieldSignalNumeric1()
         field_signal_numeric1_decimals1 = FieldSignalNumeric1Decimals1()
         field_signal_numeric1_decimals2 = FieldSignalNumeric1Decimals2()
+        field_signal_numeric1_decimals3 = FieldSignalNumeric1Decimals3()
         field_numeric_masked1 = FieldNumericMasked1()
         field_alphabetic = FieldAlphabetic()
         field_alphanumeric = FieldAlphanumeric()
@@ -94,6 +95,7 @@ class CopybookExtractor:
             .set_next(field_simple_numeric1) \
             .set_next(field_simple_numeric1_decimals1) \
             .set_next(field_simple_numeric1_decimals2) \
+            .set_next(field_signal_numeric1_decimals3) \
             .set_next(field_signal_numeric1) \
             .set_next(field_signal_numeric1_decimals1) \
             .set_next(field_signal_numeric1_decimals2) \
