@@ -1,5 +1,6 @@
 [project]
 version = "1.0.4"
+name = "coboljsonifier"
 [build-system]
 requires=[
     "setuptools>=42",
