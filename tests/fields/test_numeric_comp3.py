@@ -1,8 +1,8 @@
-from coboljsonifier.fields.field import Field
+from src.coboljsonifier.fields.field import Field
 import unittest
 from decimal import Decimal
 
-from  coboljsonifier.fields.field_numeric_comp3 import FieldNumericComp3
+from  src.coboljsonifier.fields.field_numeric_comp3 import FieldNumericComp3
 
 
 class TestFieldNumericComp3(unittest.TestCase):

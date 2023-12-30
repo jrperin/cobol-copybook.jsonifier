@@ -1,7 +1,7 @@
 import unittest
 from decimal import Decimal
 
-from coboljsonifier.fields.field_numeric_ebcdic import FieldNumericEbcdic
+from src.coboljsonifier.fields.field_numeric_ebcdic import FieldNumericEbcdic
 
 class TestFieldNumericEbcdic(unittest.TestCase):
 

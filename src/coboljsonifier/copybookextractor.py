@@ -2,17 +2,17 @@ import os.path
 import re
 from typing import List
 
-from coboljsonifier.extractors.book_item import BookItem
-from coboljsonifier.extractors.field_extractor import   FieldAlphabetic, FieldAlphanumeric, FieldArray, FieldEmpty, \
+from src.coboljsonifier.extractors.book_item import BookItem
+from src.coboljsonifier.extractors.field_extractor import   FieldAlphabetic, FieldAlphanumeric, FieldArray, FieldEmpty, \
                                                         FieldGroup, FieldNumericMasked1, FieldSignalNumeric1, \
                                                         FieldSignalNumeric1Decimals1, FieldSignalNumeric1Decimals2, \
                                                         FieldSimpleNumeric, FieldSimpleNumeric1, FieldSimpleNumeric1Decimals1, \
                                                         FieldSimpleNumeric1Decimals2, FieldSimpleNumericDecimals1, \
                                                         FieldSimpleNumericDecimals2, FieldUndefined
-from coboljsonifier.extractors.structure_extractor import   ArrayStructureExtractor, GroupStructureExtractor, RedefinesStructureExtractor, \
+from src.coboljsonifier.extractors.structure_extractor import   ArrayStructureExtractor, GroupStructureExtractor, RedefinesStructureExtractor, \
                                                             SimpleFieldStructureExtractor, SubformatStructureExtractor, \
                                                             UndefinedStructureExtractor
-from coboljsonifier.extractors.subformat_extractor import BookItem, SubformatBinary, SubformatComp3, SubformatEmpty, SubformatUndefined
+from src.coboljsonifier.extractors.subformat_extractor import BookItem, SubformatBinary, SubformatComp3, SubformatEmpty, SubformatUndefined
 
 
 class CopybookExtractor:

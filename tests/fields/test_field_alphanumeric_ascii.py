@@ -1,6 +1,6 @@
 import unittest
 
-from coboljsonifier.fields.field_alphanumeric_ascii import FieldAlphanumericAscii
+from src.coboljsonifier.fields.field_alphanumeric_ascii import FieldAlphanumericAscii
 
 
 class TestFieldAlphanumericAscii(unittest.TestCase):
