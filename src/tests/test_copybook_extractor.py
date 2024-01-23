@@ -29,5 +29,33 @@ class TestCopybookExtractor(unittest.TestCase):
         # self.assertRaises(ValueError, CopybookExtractor, 'src/test_files/book_tests_NOK_binary_greater_18.cob')
 
 
+    def test_constructor_with_file_and_list(self):
+        
+        with self.assertRaises(Exception) as e:
+            CopybookExtractor(book_file_name="xpto", book_str_list=["xpto", "xpto"])
+
+        self.assertEqual(str(e.exception), "Apenas um argumento deve ser preenchido book_file_name ou book_str_list")
+    
+    def test_constructor_without_args(self):
+        
+        with self.assertRaises(Exception) as e:
+            CopybookExtractor()
+
+        self.assertEqual(str(e.exception), "Apenas um argumento deve ser preenchido book_file_name ou book_str_list")
+
+    def test_constructor_with_list_str(self):
+
+        list_str = []
+        with open('src/tests/test_files/DATA1_BOOK.cob', 'r', encoding="utf-8",errors="ignore") as f:
+            while True:
+                line = f.readline()
+                if not line:
+                    break
+                list_str.append(line)
+        
+        ce = CopybookExtractor(book_str_list=list_str).dict_book_structure
+        
+        self.assertTrue(ce)
+
 if __name__ == '__main__':
     unittest.main()

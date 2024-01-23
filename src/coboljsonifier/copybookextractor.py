@@ -50,7 +50,7 @@ class CopybookExtractor:
                 line = (line + " "*80)[:72]
                 lines.append(line)
         else:
-            raise Exception('Apenas um argumento deve ser preenchido book_file_name ou book_str_list')
+            raise Exception('Um dos argumentos deve ser preenchido book_file_name ou book_str_list')
 
         book = self._join_lines(lines)
         self.book_structure = self._extract(book)
