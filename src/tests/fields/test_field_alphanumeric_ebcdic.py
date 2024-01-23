@@ -1,6 +1,6 @@
 import unittest
 
-from src.coboljsonifier.fields.field_alphanumeric_ebcdic import FieldAlphanumericEbcdic
+from coboljsonifier.fields.field_alphanumeric_ebcdic import FieldAlphanumericEbcdic
 
 class TestFieldAlphanumericEbcdic(unittest.TestCase):
 

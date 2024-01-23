@@ -1,6 +1,6 @@
 import unittest
 
-from src.coboljsonifier.fields.field_numeric_binary import FieldNumericBinary
+from coboljsonifier.fields.field_numeric_binary import FieldNumericBinary
 
 
 class TestFieldNumericBinary(unittest.TestCase):

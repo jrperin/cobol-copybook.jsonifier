@@ -114,7 +114,7 @@ $ pip install -r requirements.txt
 **Unit Tests:**
 ``` bash
 # Running only the unittest
-$ python -m unittest discover
+$ python -m unittest discover src/
 
 # Checking test coveraging
 $ coverage run -m unittest discover

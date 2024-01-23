@@ -2,40 +2,60 @@ import os.path
 import re
 from typing import List
 
-from src.coboljsonifier.extractors.book_item import BookItem
-from src.coboljsonifier.extractors.field_extractor import   FieldAlphabetic, FieldAlphanumeric, FieldArray, FieldEmpty, \
+from coboljsonifier.extractors.book_item import BookItem
+from coboljsonifier.extractors.field_extractor import   FieldAlphabetic, FieldAlphanumeric, FieldArray, FieldEmpty, \
                                                         FieldGroup, FieldNumericMasked1, FieldSignalNumeric1, \
                                                         FieldSignalNumeric1Decimals1, FieldSignalNumeric1Decimals2, \
                                                         FieldSimpleNumeric, FieldSimpleNumeric1, FieldSimpleNumeric1Decimals1, \
                                                         FieldSimpleNumeric1Decimals2, FieldSimpleNumericDecimals1, \
                                                         FieldSimpleNumericDecimals2, FieldUndefined
-from src.coboljsonifier.extractors.structure_extractor import   ArrayStructureExtractor, GroupStructureExtractor, RedefinesStructureExtractor, \
+from coboljsonifier.extractors.structure_extractor import   ArrayStructureExtractor, GroupStructureExtractor, RedefinesStructureExtractor, \
                                                             SimpleFieldStructureExtractor, SubformatStructureExtractor, \
                                                             UndefinedStructureExtractor
-from src.coboljsonifier.extractors.subformat_extractor import BookItem, SubformatBinary, SubformatComp3, SubformatEmpty, SubformatUndefined
+from coboljsonifier.extractors.subformat_extractor import BookItem, SubformatBinary, SubformatComp3, SubformatEmpty, SubformatUndefined
 
 
 class CopybookExtractor:
 
-    def __init__(self, bookfilename):
+    def __init__(self, book_file_name:str=None, book_str_list:list[str]=None):
+        """
+        book_file_name ou book_str_list deve ser definido. Somente um deles.
+        Parametros
+        ----------
+        (Opcional)book_file_name : str
+            Nome do arquivo com o Copybook a ser trabalhado
+        (Opcional)book_str_list : list[str]
+            Conteúdo do Copybook a ser trabalhado em formato de list[str]
+        """
+        if (book_file_name and book_str_list) or (not book_file_name and not book_str_list):
+            raise Exception('Apenas um argumento deve ser preenchido book_file_name ou book_str_list')
+        
+        lines = list()
 
-        if not os.path.isfile(bookfilename):
-            raise IOError(f'Arquivo {bookfilename} não exite!')
+        if book_file_name:
+            if not os.path.isfile(book_file_name):
+                raise IOError(f'Arquivo {book_file_name} não existe!')
 
-        with open(bookfilename, 'r', encoding="utf-8",errors="ignore") as f:
-            
-            lines = list()
-            while True:
-                line = f.readline()
-                if not line:
-                    break
+            with open(book_file_name, 'r', encoding="utf-8",errors="ignore") as f:
+                
+                while True:
+                    line = f.readline()
+                    if not line:
+                        break
+                    line = (line + " "*80)[:72]
+                    lines.append(line)
+        
+        elif book_str_list:
+            for line in book_str_list:
                 line = (line + " "*80)[:72]
                 lines.append(line)
+        else:
+            raise Exception('Apenas um argumento deve ser preenchido book_file_name ou book_str_list')
 
-            book = self._join_lines(lines)
-            self.book_structure = self._extract(book)
-            self.dict_book_structure = {}
-            self._dictfy_structure(self.book_structure, self.dict_book_structure, 0, 0, 0)
+        book = self._join_lines(lines)
+        self.book_structure = self._extract(book)
+        self.dict_book_structure = {}
+        self._dictfy_structure(self.book_structure, self.dict_book_structure, 0, 0, 0)
 
     ''' Retira campos desnecessários (ex. Nível 88) '''
     def _is_disposable(self, line):
