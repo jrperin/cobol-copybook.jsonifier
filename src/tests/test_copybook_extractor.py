@@ -41,7 +41,7 @@ class TestCopybookExtractor(unittest.TestCase):
         with self.assertRaises(Exception) as e:
             CopybookExtractor()
 
-        self.assertEqual(str(e.exception), "Apenas um argumento deve ser preenchido book_file_name ou book_str_list")
+        self.assertEqual(str(e.exception), "Um dos argumentos deve ser preenchido book_file_name ou book_str_list")
 
     def test_constructor_with_list_str(self):
 
@@ -56,6 +56,15 @@ class TestCopybookExtractor(unittest.TestCase):
         ce = CopybookExtractor(book_str_list=list_str).dict_book_structure
         
         self.assertTrue(ce)
+    
+    def test_constructor_with_empty_list_str(self):
+
+        list_str = []
+        
+        with self.assertRaises(Exception) as e:
+            CopybookExtractor(book_str_list=list_str).dict_book_structure
+        
+        self.assertEqual(str(e.exception), "Um dos argumentos deve ser preenchido book_file_name ou book_str_list")
 
 if __name__ == '__main__':
     unittest.main()

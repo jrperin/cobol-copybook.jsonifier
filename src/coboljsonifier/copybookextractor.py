@@ -27,8 +27,10 @@ class CopybookExtractor:
         (Opcional)book_str_list : list[str]
             Conteúdo do Copybook a ser trabalhado em formato de list[str]
         """
-        if (book_file_name and book_str_list) or (not book_file_name and not book_str_list):
+        if (book_file_name and book_str_list):
             raise Exception('Apenas um argumento deve ser preenchido book_file_name ou book_str_list')
+        elif (not book_file_name and not book_str_list):
+            raise Exception('Um dos argumentos deve ser preenchido book_file_name ou book_str_list')
         
         lines = list()
 
@@ -49,8 +51,7 @@ class CopybookExtractor:
             for line in book_str_list:
                 line = (line + " "*80)[:72]
                 lines.append(line)
-        else:
-            raise Exception('Um dos argumentos deve ser preenchido book_file_name ou book_str_list')
+
 
         book = self._join_lines(lines)
         self.book_structure = self._extract(book)
