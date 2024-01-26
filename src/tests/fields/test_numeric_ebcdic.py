@@ -14,17 +14,17 @@ class TestFieldNumericEbcdic(unittest.TestCase):
         # Testa valor positivo  00123 = F0F0F1F2C3 - 2 decimals
         numeric_obj = FieldNumericEbcdic('NUMERIC', 'FIELD-NUMERIC-EBCDIC', 5, 2)
         numeric_obj.parse(self.value_positive)
-        self.assertEqual(numeric_obj.value, {'FIELD-NUMERIC-EBCDIC' : Decimal(1.23)})
+        self.assertEqual(numeric_obj.value, {'FIELD-NUMERIC-EBCDIC' : Decimal('1.23')})
 
         # Testa valor negativo -00123 = F0F0F1F2D3 - 2 decimals
         numeric_obj = FieldNumericEbcdic('NUMERIC', 'FIELD-NUMERIC-EBCDIC', 5, 2)
         numeric_obj.parse(self.value_negative)
-        self.assertEqual(numeric_obj.value, {'FIELD-NUMERIC-EBCDIC' : Decimal(-1.23)})
+        self.assertEqual(numeric_obj.value, {'FIELD-NUMERIC-EBCDIC' : Decimal('-1.23')})
     
         # Testa valor sem sinal 00123 = F0F0F1F2F3 - 2 decimals
         numeric_obj = FieldNumericEbcdic('NUMERIC', 'FIELD-NUMERIC-EBCDIC', 5, 2)
         numeric_obj.parse(self.value_no_signal)
-        self.assertEqual(numeric_obj.value, {'FIELD-NUMERIC-EBCDIC' : Decimal(1.23)})
+        self.assertEqual(numeric_obj.value, {'FIELD-NUMERIC-EBCDIC' : Decimal('1.23')})
 
     # def test_values(self):
     #     self.assertRaises(ValueError, FieldNumericEbcdic, b'\xA0\xF0\xF1\xF2\xF3', 2)

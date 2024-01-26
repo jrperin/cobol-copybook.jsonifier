@@ -17,25 +17,46 @@ from coboljsonifier.extractors.subformat_extractor import BookItem, SubformatBin
 
 class CopybookExtractor:
 
-    def __init__(self, bookfilename):
+    def __init__(self, book_file_name:str=None, book_str_list:list[str]=None):
+        """
+        book_file_name ou book_str_list deve ser definido. Somente um deles.
+        Parametros
+        ----------
+        (Opcional)book_file_name : str
+            Nome do arquivo com o Copybook a ser trabalhado
+        (Opcional)book_str_list : list[str]
+            Conteúdo do Copybook a ser trabalhado em formato de list[str]
+        """
+        if (book_file_name and book_str_list):
+            raise Exception('Apenas um argumento deve ser preenchido book_file_name ou book_str_list')
+        elif (not book_file_name and not book_str_list):
+            raise Exception('Um dos argumentos deve ser preenchido book_file_name ou book_str_list')
+        
+        lines = list()
 
-        if not os.path.isfile(bookfilename):
-            raise IOError(f'Arquivo {bookfilename} não exite!')
+        if book_file_name:
+            if not os.path.isfile(book_file_name):
+                raise IOError(f'Arquivo {book_file_name} não existe!')
 
-        with open(bookfilename, 'r', encoding="utf-8",errors="ignore") as f:
-            
-            lines = list()
-            while True:
-                line = f.readline()
-                if not line:
-                    break
+            with open(book_file_name, 'r', encoding="utf-8",errors="ignore") as f:
+                
+                while True:
+                    line = f.readline()
+                    if not line:
+                        break
+                    line = (line + " "*80)[:72]
+                    lines.append(line)
+        
+        elif book_str_list:
+            for line in book_str_list:
                 line = (line + " "*80)[:72]
                 lines.append(line)
 
-            book = self._join_lines(lines)
-            self.book_structure = self._extract(book)
-            self.dict_book_structure = {}
-            self._dictfy_structure(self.book_structure, self.dict_book_structure, 0, 0, 0)
+
+        book = self._join_lines(lines)
+        self.book_structure = self._extract(book)
+        self.dict_book_structure = {}
+        self._dictfy_structure(self.book_structure, self.dict_book_structure, 0, 0, 0)
 
     ''' Retira campos desnecessários (ex. Nível 88) '''
     def _is_disposable(self, line):
