@@ -16,27 +16,27 @@ class TestFieldNumericComp3(unittest.TestCase):
         # Testa valor 1234567C (C = positivo) sem casas decimais
         comp3obj = FieldNumericComp3('NUMERIC_COMP3', 'FIELD-NUMERIC-COMP3', 4, 0)
         comp3obj.parse(self.comp3_positive_value)
-        self.assertEqual(comp3obj.value, {'FIELD-NUMERIC-COMP3': Decimal(1234567)})
+        self.assertEqual(comp3obj.value, {'FIELD-NUMERIC-COMP3': Decimal('1234567')})
 
         # Testa valor 1234567C (C = positivo) com 2 casas decimais
         comp3obj = FieldNumericComp3('NUMERIC_COMP3', 'FIELD-NUMERIC-COMP3', 4, 2)
         comp3obj.parse(self.comp3_positive_value)
-        self.assertEqual(comp3obj.value, {'FIELD-NUMERIC-COMP3': Decimal(12345.67)})
+        self.assertEqual(comp3obj.value, {'FIELD-NUMERIC-COMP3': Decimal('12345.67')})
         
         # Testa valor 1234567C (C = positivo) com 4 casas decimais
         comp3obj = FieldNumericComp3('NUMERIC_COMP3', 'FIELD-NUMERIC-COMP3', 4, 4)
         comp3obj.parse(self.comp3_positive_value)
-        self.assertEqual(comp3obj.value, {'FIELD-NUMERIC-COMP3': Decimal(123.4567)})
+        self.assertEqual(comp3obj.value, {'FIELD-NUMERIC-COMP3': Decimal('123.4567')})
         
         # Testa valor 1234567D (D = negativo) com 2 casas decimais
         comp3obj = FieldNumericComp3('NUMERIC_COMP3', 'FIELD-NUMERIC-COMP3', 4, 2)
         comp3obj.parse(self.comp3_negative_value)
-        self.assertEqual(comp3obj.value, {'FIELD-NUMERIC-COMP3': Decimal(-12345.67)})
+        self.assertEqual(comp3obj.value, {'FIELD-NUMERIC-COMP3': Decimal('-12345.67')})
         
         # Testa valor 1234567F (F = s/ sinal) com 2 casas decimais
         comp3obj = FieldNumericComp3('NUMERIC_COMP3', 'FIELD-NUMERIC-COMP3', 4, 2)
         comp3obj.parse(self.comp3_no_signal_value)
-        self.assertEqual(comp3obj.value, {'FIELD-NUMERIC-COMP3': Decimal(12345.67)})
+        self.assertEqual(comp3obj.value, {'FIELD-NUMERIC-COMP3': Decimal('12345.67')})
 
 
     # Verify later how could check it...
