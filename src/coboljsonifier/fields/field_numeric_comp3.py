@@ -17,7 +17,7 @@ class FieldNumericComp3(Field):
         data = data_in[:self.size]
         data_len = (len(data) * 2) - 1
         if self.decimals > data_len:
-            raise ValueError(f"{self.name} - Decimal ({self.decimals}) excede o tamanho do campo ({data_len})")
+            raise ValueError(f"{self.name} - Decimal ({self.decimals}) exceeds the field size ({data_len})")
 
         result = ''
         signal = 1
@@ -27,22 +27,22 @@ class FieldNumericComp3(Field):
             try:
                 high, low = item >> 4, item & 0x0F
             except Exception as e:
-                print(f'{self.name} - Erro no parse do valor do campo ({self.name} - FieldNumericComp3')
+                print(f'{self.name} - Error parsing field value ({self.name} - FieldNumericComp3')
                 print(e)
                 raise
 
-            # Validacoes de integridade
+            # Integrity validations
             if high > 9:
-                raise ValueError(f'{self.name} - Dados inválidos! High value esperado entre 0 e 9. Recebido {high} - {data}...')
+                raise ValueError(f'{self.name} - Invalid data! Expected high value between 0 and 9. Received {high} - {data}...')
             if cont < len(data) - 1:
                 if low > 9:
-                    raise ValueError(f'{self.name} - Dados inválidos! LOW value esperado entre 0 e 9. Recebido {low} - - {data}...')
+                    raise ValueError(f'{self.name} - Invalid data! Expected low value between 0 and 9. Received {low} - {data}...')
                 result += str(high) + str(low)
             else:
-                # checking signal (C:12:+, D:13-, F:15:no sinal)
+                # checking signal (C:12:+, D:13-, F:15:no signal)
                 if low not in (12, 13, 15):
                     raise ValueError(
-                        f'{self.name} - Dados inválidos! Signal do campo esperado: 12[C], 13[D] ou 15[F]. Recebido {low} - {data}...')
+                        f'{self.name} - Invalid data! Expected field signal: 12[C], 13[D], or 15[F]. Received {low} - {data}...')
                 if low == 13:
                     signal = -1
                 result += str(high)
@@ -56,4 +56,3 @@ class FieldNumericComp3(Field):
         self._value = result
 
         return data_in[self.size:]
-

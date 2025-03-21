@@ -59,7 +59,7 @@ class SubformatBinary(AbstractSubformatExtractor):
                 elif book_item.size > 9 and book_item.size <= 18:
                     book_item.size = 8
                 else:
-                    raise ValueError(f"Maior tamanho para BINARY = 18, informado = [{book_item.size}]")
+                    raise ValueError(f"Maximum size for BINARY is 18, provided size is [{book_item.size}]")
                 book_item.type = "NUMERIC_BINARY"
                 return book_item
         else:
@@ -68,5 +68,5 @@ class SubformatBinary(AbstractSubformatExtractor):
 
 class SubformatUndefined(AbstractSubformatExtractor):
     def extract(self, book_item: BookItem):
-        raise ValueError(f"Subformato nao desconhecido = [{book_item.subformat}].")
+        raise ValueError(f"Unknown subformat = [{book_item.subformat}].")
 

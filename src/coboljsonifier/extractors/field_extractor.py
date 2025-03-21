@@ -6,7 +6,7 @@ from .book_item import BookItem
 
 class FieldExtractor(ABC):
     '''
-    Chain of responsability para tratar os tipos dos campos.
+    Chain of responsibility for handling field types.
 
     ===========================================================================
       TYPES                                    CLASSES
@@ -253,5 +253,5 @@ class FieldAlphanumeric(AbstractFieldExtractor):
 # 12
 class FieldUndefined(AbstractFieldExtractor):
     def extract(self, book_item: BookItem):
-        raise Exception(f"ERRO ao processar field \n\t==> [{book_item.format}]")
+        raise Exception(f"ERROR processing field \n\t==> [{book_item.format}]")
 

@@ -6,8 +6,8 @@ from ..fields.field import Field
 
 class StructureExtractor(ABC):
     '''
-    Chain of responsability que extrai a estrutura
-    de acordo com regex específico.
+    Chain of responsibility that extracts the structure
+    according to specific regex.
     '''
 
     @abstractmethod
@@ -36,7 +36,7 @@ class AbstractStructureExtractor(StructureExtractor):
 
 class GroupStructureExtractor(AbstractStructureExtractor):
     def extract(self, line: str, field: Field):
-        # Ex.: 
+        # Example: 
         # 03  VQBE-KEY.
         line = line.replace("USAGE", "").replace("usage", "")
         m = re.search(r"^.{6}[^(*)]\s*([0-9]+)\s+([\w|-]*)\s*\..*$", line)
@@ -54,7 +54,7 @@ class GroupStructureExtractor(AbstractStructureExtractor):
 
 class ArrayStructureExtractor(AbstractStructureExtractor):
     def extract(self, line: str, field: Field):
-        # Ex.: 
+        # Example: 
         # 01 WS-TABLE.
         #     05 WS-A OCCURS 10 TIMES. <--
         #         10 WS-B PIC A(10).
@@ -75,7 +75,7 @@ class ArrayStructureExtractor(AbstractStructureExtractor):
 
 class SimpleFieldStructureExtractor(AbstractStructureExtractor):
     def extract(self, line: str, field: Field):
-        # Ex.:
+        # Example:
         # 05  VQBE-NUM-CPF-CNPJ         PIC X(14).
         # 05  VQBE-NUM-CPF-CNPJ         PIC 999.
         # 05  VQBE-NUM-CPF-CNPJ         PIC 999V99.
@@ -93,7 +93,7 @@ class SimpleFieldStructureExtractor(AbstractStructureExtractor):
             return field
 
         else:
-            # Tratamento do formato especial MASKED
+            # Special MASKED format handling
             #          05  VQLBMIG-VS-AMT            PIC +99999999999999.99.
             #          05  VQLBMIG-VS-AMT            PIC +99999999999999 .
             #          05  VQLBMIG-VS-AMT            PIC +ZZZZZZZZZZZZZ9.99 .
@@ -118,7 +118,7 @@ class SimpleFieldStructureExtractor(AbstractStructureExtractor):
 
 class SubformatStructureExtractor(AbstractStructureExtractor):
     def extract(self, line: str, field: Field):
-        # Ex.:
+        # Example:
         # 05  VQBE-DAT-INI-ENDR             PIC S9(07) COMP-3.
         # 05  VQBE-DAT-INI-ENDR             PIC S9(07) BINARY.
         # 05  VQBE-DAT-INI-ENDR             PIC S9(07) COMP.
@@ -138,16 +138,16 @@ class SubformatStructureExtractor(AbstractStructureExtractor):
 
 class RedefinesStructureExtractor(AbstractStructureExtractor):
     def extract(self, line: str, field: Field):
-        # Ex.:
+        # Example:
         # 03  :AMSL:-AMBS-DATA    REDEFINES :AMSL:-DATA.
         m = re.search(r"^.*REDEFINES.*$", line)
         if m:
-            raise Exception(f"Impossivel tratar book com REDEFINES \n\t==> {line}")
+            raise Exception(f"Impossible to process book with REDEFINES \n\t==> {line}")
         else:
             return super().extract(line, field)
 
 
 class UndefinedStructureExtractor(AbstractStructureExtractor):
     def extract(self, line: str, field: Field):
-        raise Exception(f"ERRO ao processar linha \n\t==>{line}")
+        raise Exception(f"ERROR processing line \n\t==>{line}")
 

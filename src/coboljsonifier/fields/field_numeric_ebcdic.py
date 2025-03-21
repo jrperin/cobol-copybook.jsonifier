@@ -9,7 +9,6 @@ class FieldNumericEbcdic(Field):
     def __init__(self, type: str, name: str, size: int, decimals: int):
         super(FieldNumericEbcdic, self).__init__(type, name, size, decimals)
 
-
     def parse(self, data_in):
         result = ""
 
@@ -23,19 +22,19 @@ class FieldNumericEbcdic(Field):
             try:
                 high, low = data[i] >> 4, data[i] & 0x0F
             except Exception as e:
-                print(f'{self.name} - Erro no parse do valor do campo ({self.name} - FieldNumericEbcdic')
+                print(f'{self.name} - Error parsing field value ({self.name} - FieldNumericEbcdic)')
                 print(e)
                 raise
             if i == (len(data) - 1):
                 if high not in (12, 13, 15):
                     raise ValueError(
-                        f'{self.name} - Dados inválidos! Signal do campo esperado: 12[C], 13[D] ou 15[F]. Recebido {high}...')
+                        f'{self.name} - Invalid data! Expected field signal: 12[C], 13[D], or 15[F]. Received {high}...')
                 if high == 13:
                     signal = -1
             else:
                 if high != 15:
                     raise ValueError(
-                        f'{self.name} - Dados inválidos! Comp3 high value esperado é 15[F] e recebido = [{high}]. data = [{data}]..')
+                        f'{self.name} - Invalid data! Expected COMP3 high value is 15[F], but received = [{high}]. data = [{data}]..')
 
             result += str(low)
         result = int(result) * signal
@@ -45,4 +44,3 @@ class FieldNumericEbcdic(Field):
         self._value = result
 
         return data_in[self.size:]
-

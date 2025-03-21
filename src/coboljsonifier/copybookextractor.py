@@ -3,15 +3,15 @@ import re
 from typing import List
 
 from coboljsonifier.extractors.book_item import BookItem
-from coboljsonifier.extractors.field_extractor import   FieldAlphabetic, FieldAlphanumeric, FieldArray, FieldEmpty, \
-                                                        FieldGroup, FieldNumericMasked1, FieldSignalNumeric1, \
-                                                        FieldSignalNumeric1Decimals1, FieldSignalNumeric1Decimals2, \
-                                                        FieldSimpleNumeric, FieldSimpleNumeric1, FieldSimpleNumeric1Decimals1, \
-                                                        FieldSimpleNumeric1Decimals2, FieldSimpleNumericDecimals1, \
-                                                        FieldSimpleNumericDecimals2, FieldUndefined
-from coboljsonifier.extractors.structure_extractor import   ArrayStructureExtractor, GroupStructureExtractor, RedefinesStructureExtractor, \
-                                                            SimpleFieldStructureExtractor, SubformatStructureExtractor, \
-                                                            UndefinedStructureExtractor
+from coboljsonifier.extractors.field_extractor import FieldAlphabetic, FieldAlphanumeric, FieldArray, FieldEmpty, \
+    FieldGroup, FieldNumericMasked1, FieldSignalNumeric1, \
+    FieldSignalNumeric1Decimals1, FieldSignalNumeric1Decimals2, \
+    FieldSimpleNumeric, FieldSimpleNumeric1, FieldSimpleNumeric1Decimals1, \
+    FieldSimpleNumeric1Decimals2, FieldSimpleNumericDecimals1, \
+    FieldSimpleNumericDecimals2, FieldUndefined
+from coboljsonifier.extractors.structure_extractor import ArrayStructureExtractor, GroupStructureExtractor, RedefinesStructureExtractor, \
+    SimpleFieldStructureExtractor, SubformatStructureExtractor, \
+    UndefinedStructureExtractor
 from coboljsonifier.extractors.subformat_extractor import BookItem, SubformatBinary, SubformatComp3, SubformatEmpty, SubformatUndefined
 
 
@@ -20,16 +20,16 @@ class CopybookExtractor:
     def __init__(self, bookfilename):
 
         if not os.path.isfile(bookfilename):
-            raise IOError(f'Arquivo {bookfilename} não exite!')
+            raise IOError(f'File {bookfilename} does not exist!')
 
-        with open(bookfilename, 'r', encoding="utf-8",errors="ignore") as f:
-            
+        with open(bookfilename, 'r', encoding="utf-8", errors="ignore") as f:
+
             lines = list()
             while True:
                 line = f.readline()
                 if not line:
                     break
-                line = (line + " "*80)[:72]
+                line = (line + " " * 80)[:72]
                 lines.append(line)
 
             book = self._join_lines(lines)
@@ -37,10 +37,10 @@ class CopybookExtractor:
             self.dict_book_structure = {}
             self._dictfy_structure(self.book_structure, self.dict_book_structure, 0, 0, 0)
 
-    ''' Retira campos desnecessários (ex. Nível 88) '''
+    ''' Remove unnecessary fields (e.g., Level 88) '''
     def _is_disposable(self, line):
 
-        # Nivel 88
+        # Level 88
         m = re.search(r"^.{6}[^(*)]\s+([0-9]+).*$", line)
         if m:
             if int(m.group(1)) >= 88:
@@ -48,15 +48,15 @@ class CopybookExtractor:
 
         return False
 
-    ''' Percorre todo o book (dicionario) e coloca a posicao no layout '''
+    ''' Iterate through the entire book (dictionary) and set the position in the layout '''
 
-    def _setup_position(self, itens, pos_ini):
+    def _setup_position(self, items, pos_ini):
 
-        for item in itens.values():
+        for item in items.values():
 
             if isinstance(item, dict):
                 item['initial_pos'] = pos_ini
-                pos_ini += item['lenght']
+                pos_ini += item['length']
 
             if isinstance(item, list):
                 for it in item:
@@ -64,11 +64,11 @@ class CopybookExtractor:
 
         return pos_ini
 
-    ''' Pega o tamanho do campo com base no subformato (COMP-3, BINARY) '''
+    ''' Get the field size based on the subformat (COMP-3, BINARY) '''
 
-    def _extract_field_lenght(self, field):
+    def _extract_field_length(self, field):
 
-        ''' Chain of Responsability para identificar o tipo do campo'''
+        ''' Chain of Responsibility to identify the field type '''
         field_group = FieldGroup()
         field_array = FieldArray()
         field_empty = FieldEmpty()
@@ -97,26 +97,26 @@ class CopybookExtractor:
             .set_next(field_signal_numeric1) \
             .set_next(field_signal_numeric1_decimals1) \
             .set_next(field_signal_numeric1_decimals2) \
-            .set_next(field_numeric_masked1)\
+            .set_next(field_numeric_masked1) \
             .set_next(field_alphabetic) \
             .set_next(field_alphanumeric) \
             .set_next(field_undefined)
         field_group.extract(field)
 
-        ''' Chain of Responsability para identificar o subtipo do campo '''
+        ''' Chain of Responsibility to identify the field subtype '''
         subformat_empty = SubformatEmpty()
         subformat_comp3 = SubformatComp3()
         subformat_binary = SubformatBinary()
         subformat_undefined = SubformatUndefined()
 
         subformat_empty.set_next(subformat_comp3).set_next(subformat_binary).set_next(subformat_undefined)
-        
+
         subformat_empty.extract(field)
 
         return field
 
     def _dictfy_structure(self, bookstructure: List[BookItem], parent_object, parent_level, item, position):
-        
+
         i = item
         response = dict()
 
@@ -140,20 +140,20 @@ class CopybookExtractor:
                     elif isinstance(parent_object, list):
                         parent_object.append(bookstructure[i].__dict__)
 
-                    if i < len(bookstructure)-1:
+                    if i < len(bookstructure) - 1:
                         i += 1
                         next_obj_level = bookstructure[i].level
-                        # Precisa de uma condicao de STOP se subir um nivel
+                        # Need a STOP condition if a level is exceeded
                         if next_obj_level <= parent_level:
                             return i
                     else:
                         return i
-                    
+
                 elif bookstructure[i].type == 'GROUP':
                     i += 1
 
                 elif bookstructure[i].type == 'ARRAY':
-                    cicles = int(bookstructure[i].occurs)
+                    cycles = int(bookstructure[i].occurs)
                     my_name = bookstructure[i].name
                     my_level = bookstructure[i].level
                     i += 1
@@ -161,7 +161,7 @@ class CopybookExtractor:
                     i = self._dictfy_structure(bookstructure, r, my_level, i, position)
 
                     lines = list()
-                    for j in range(1, cicles + 1, 1):
+                    for j in range(1, cycles + 1, 1):
                         lines.append(r)
 
                     response[my_name] = lines
@@ -170,16 +170,16 @@ class CopybookExtractor:
                         parent_object[my_name] = response[my_name]
                     elif isinstance(parent_object, list):
                         parent_object.append(response[my_name])
-                    
+
                 else:
-                    raise Exception(f'bookstructure.type nao reconhecido: [{bookstructure[i].type}]')
+                    raise Exception(f'Unrecognized bookstructure.type: [{bookstructure[i].type}]')
 
                 # if i >= len(bookstructure):
                 #     break
 
         return
 
-    ''' Junta as linhas, remove comentarios e niveis 88 '''
+    ''' Join lines, remove comments and level 88 '''
 
     def _join_lines(self, book):
         prev = ""
@@ -190,7 +190,7 @@ class CopybookExtractor:
 
         for line in book:
             line = line.replace(":", "").replace("\n", "")
-            if len(line) >= 6 and line[6] != "*":  # Remove linhas que sao comentarios
+            if len(line) >= 6 and line[6] != "*":  # Remove lines that are comments
                 ln_aux = prev + line
                 if ln_aux.find('.') > -1:
                     prev = ""
@@ -230,9 +230,9 @@ class CopybookExtractor:
 
             group_extractor.extract(book_line, book_item)
 
-            self._extract_field_lenght(book_item)
+            self._extract_field_length(book_item)
 
-            ''' FILLER precisam ter nomes diferentes por causa do dict() '''
+            ''' FILLER must have different names because of dict() '''
             if book_item.name.upper() == 'FILLER':
                 book_item.name += f"-{filler_count}"
                 filler_count += 1
@@ -240,4 +240,3 @@ class CopybookExtractor:
             lines.append(book_item)
 
         return lines
-

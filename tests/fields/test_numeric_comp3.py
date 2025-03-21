@@ -13,27 +13,27 @@ class TestFieldNumericComp3(unittest.TestCase):
 
     def test_parsing(self):
 
-        # Testa valor 1234567C (C = positivo) sem casas decimais
+        # Test value 1234567C (C = positive) without decimal places
         comp3obj = FieldNumericComp3('NUMERIC_COMP3', 'FIELD-NUMERIC-COMP3', 4, 0)
         comp3obj.parse(self.comp3_positive_value)
         self.assertEqual(comp3obj.value, {'FIELD-NUMERIC-COMP3': Decimal(1234567)})
 
-        # Testa valor 1234567C (C = positivo) com 2 casas decimais
+        # Test value 1234567C (C = positive) with 2 decimal places
         comp3obj = FieldNumericComp3('NUMERIC_COMP3', 'FIELD-NUMERIC-COMP3', 4, 2)
         comp3obj.parse(self.comp3_positive_value)
         self.assertEqual(comp3obj.value, {'FIELD-NUMERIC-COMP3': Decimal(12345.67)})
         
-        # Testa valor 1234567C (C = positivo) com 4 casas decimais
+        # Test value 1234567C (C = positive) with 4 decimal places
         comp3obj = FieldNumericComp3('NUMERIC_COMP3', 'FIELD-NUMERIC-COMP3', 4, 4)
         comp3obj.parse(self.comp3_positive_value)
         self.assertEqual(comp3obj.value, {'FIELD-NUMERIC-COMP3': Decimal(123.4567)})
         
-        # Testa valor 1234567D (D = negativo) com 2 casas decimais
+        # Test value 1234567D (D = negative) with 2 decimal places
         comp3obj = FieldNumericComp3('NUMERIC_COMP3', 'FIELD-NUMERIC-COMP3', 4, 2)
         comp3obj.parse(self.comp3_negative_value)
         self.assertEqual(comp3obj.value, {'FIELD-NUMERIC-COMP3': Decimal(-12345.67)})
         
-        # Testa valor 1234567F (F = s/ sinal) com 2 casas decimais
+        # Test value 1234567F (F = no signal) with 2 decimal places
         comp3obj = FieldNumericComp3('NUMERIC_COMP3', 'FIELD-NUMERIC-COMP3', 4, 2)
         comp3obj.parse(self.comp3_no_signal_value)
         self.assertEqual(comp3obj.value, {'FIELD-NUMERIC-COMP3': Decimal(12345.67)})
@@ -46,10 +46,10 @@ class TestFieldNumericComp3(unittest.TestCase):
         
     #     self.assertRaises(ValueError, FieldNumericComp3, b'\x12\x34\x56\x7A', 2)
         
-    #     # Testa valor High maior que 9
+    #     # Test High value greater than 9
     #     self.assertRaises(ValueError, FieldNumericComp3, b'\x12\xB4\x56\x7C', 2)
         
-    #     # Testa valor LOW maior que 9
+    #     # Test LOW value greater than 9
     #     self.assertRaises(ValueError, FieldNumericComp3, b'\x12\x3B\x56\x7C', 2)
 
 
