@@ -12,17 +12,11 @@ authors = [
     { name = "Joao Roberto Perin" }
 ]
 classifiers = [
-    "Programming Language :: Python :: 3",
-    "Operating System :: OS Independent"
+  "Programming Language :: Python3"
 ]
+license = "MIT"
+keywords = ["Cobol", "Json", "Mainframe", "Copybook", "Cobol & JSON"]
 
 [project.urls]
 Homepage = "https://github.com/jrperin/cobol-copybook.jsonifier"
-# Documentation = "https://readthedocs.org"
-# Repository = "https://github.com/me/spam.git"
 Issues = "https://github.com/jrperin/cobol-copybook.jsonifier/issues"
-# Changelog = "https://github.com/me/spam/blob/master/CHANGELOG.md"
-
-license = {text = "MIT License"}
-
-keywords = ["Cobol", "Json", "Mainframe", "Copybook", "Cobol & JSON"]
