@@ -2,17 +2,17 @@ import os.path
 import re
 from typing import List
 
-from coboljsonifier.extractors.book_item import BookItem
-from coboljsonifier.extractors.field_extractor import FieldAlphabetic, FieldAlphanumeric, FieldArray, FieldEmpty, \
+from src.coboljsonifier.extractors.book_item import BookItem
+from src.coboljsonifier.extractors.field_extractor import FieldAlphabetic, FieldAlphanumeric, FieldArray, FieldEmpty, \
     FieldGroup, FieldNumericMasked1, FieldSignalNumeric1, \
     FieldSignalNumeric1Decimals1, FieldSignalNumeric1Decimals2, \
     FieldSimpleNumeric, FieldSimpleNumeric1, FieldSimpleNumeric1Decimals1, \
     FieldSimpleNumeric1Decimals2, FieldSimpleNumericDecimals1, \
     FieldSimpleNumericDecimals2, FieldUndefined
-from coboljsonifier.extractors.structure_extractor import ArrayStructureExtractor, GroupStructureExtractor, RedefinesStructureExtractor, \
+from src.coboljsonifier.extractors.structure_extractor import ArrayStructureExtractor, GroupStructureExtractor, RedefinesStructureExtractor, \
     SimpleFieldStructureExtractor, SubformatStructureExtractor, \
     UndefinedStructureExtractor
-from coboljsonifier.extractors.subformat_extractor import BookItem, SubformatBinary, SubformatComp3, SubformatEmpty, SubformatUndefined
+from src.coboljsonifier.extractors.subformat_extractor import BookItem, SubformatBinary, SubformatComp3, SubformatEmpty, SubformatUndefined
 
 
 class CopybookExtractor:
@@ -50,19 +50,19 @@ class CopybookExtractor:
 
     ''' Iterate through the entire book (dictionary) and set the position in the layout '''
 
-    def _setup_position(self, items, pos_ini):
+    # def _setup_position(self, items, pos_ini):
 
-        for item in items.values():
+    #     for item in items.values():
 
-            if isinstance(item, dict):
-                item['initial_pos'] = pos_ini
-                pos_ini += item['length']
+    #         if isinstance(item, dict):
+    #             item['initial_pos'] = pos_ini
+    #             pos_ini += item['length']
 
-            if isinstance(item, list):
-                for it in item:
-                    pos_ini = self._setup_position(it, pos_ini)
+    #         if isinstance(item, list):
+    #             for it in item:
+    #                 pos_ini = self._setup_position(it, pos_ini)
 
-        return pos_ini
+    #     return pos_ini
 
     ''' Get the field size based on the subformat (COMP-3, BINARY) '''
 

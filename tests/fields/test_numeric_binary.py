@@ -1,6 +1,10 @@
-import unittest
+from decimal import ROUND_HALF_UP, Decimal
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 
-from coboljsonifier.fields.field_numeric_binary import FieldNumericBinary
+import unittest
+from src.coboljsonifier.fields.field_numeric_binary import FieldNumericBinary
 
 
 class TestFieldNumericBinary(unittest.TestCase):
@@ -25,12 +29,12 @@ class TestFieldNumericBinary(unittest.TestCase):
         # Testa valor 00123 com 2 casas decimais
         binary_positive_decimals = FieldNumericBinary('NUMERIC_BINARY', 'FIELD-NUMERIC-BINARY', 4, 2)
         binary_positive_decimals.parse(self.binary_123)
-        self.assertEqual(binary_positive_decimals.value, {'FIELD-NUMERIC-BINARY': 1.23})
+        self.assertEqual(binary_positive_decimals.value, {'FIELD-NUMERIC-BINARY': Decimal("1.23").quantize(Decimal('1.00'), rounding=ROUND_HALF_UP)})
         
         # Testa valor negativo -00123 com 2 casas decimais
         binary_negative_decimals = FieldNumericBinary('NUMERIC_BINARY', 'FIELD-NUMERIC-BINARY', 4, 2)
         binary_negative_decimals.parse(self.binary_negative_123)
-        self.assertEqual(binary_negative_decimals.value, {'FIELD-NUMERIC-BINARY': -1.23})
+        self.assertEqual(binary_negative_decimals.value, {'FIELD-NUMERIC-BINARY': Decimal("-1.23").quantize(Decimal('1.00'), rounding=ROUND_HALF_UP)})
 
 if __name__ == '__main__':
     unittest.main()

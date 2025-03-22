@@ -1,8 +1,12 @@
-from coboljsonifier.fields.field import Field
-import unittest
-from decimal import Decimal
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 
-from  coboljsonifier.fields.field_numeric_comp3 import FieldNumericComp3
+from src.coboljsonifier.fields.field import Field
+import unittest
+from decimal import ROUND_HALF_UP, Decimal
+
+from  src.coboljsonifier.fields.field_numeric_comp3 import FieldNumericComp3
 
 
 class TestFieldNumericComp3(unittest.TestCase):
@@ -21,22 +25,22 @@ class TestFieldNumericComp3(unittest.TestCase):
         # Test value 1234567C (C = positive) with 2 decimal places
         comp3obj = FieldNumericComp3('NUMERIC_COMP3', 'FIELD-NUMERIC-COMP3', 4, 2)
         comp3obj.parse(self.comp3_positive_value)
-        self.assertEqual(comp3obj.value, {'FIELD-NUMERIC-COMP3': Decimal(12345.67)})
+        self.assertEqual(comp3obj.value, {'FIELD-NUMERIC-COMP3': Decimal(12345.67).quantize(Decimal('1.00'), rounding=ROUND_HALF_UP)})
         
         # Test value 1234567C (C = positive) with 4 decimal places
         comp3obj = FieldNumericComp3('NUMERIC_COMP3', 'FIELD-NUMERIC-COMP3', 4, 4)
         comp3obj.parse(self.comp3_positive_value)
-        self.assertEqual(comp3obj.value, {'FIELD-NUMERIC-COMP3': Decimal(123.4567)})
+        self.assertEqual(comp3obj.value, {'FIELD-NUMERIC-COMP3': Decimal(123.4567).quantize(Decimal('1.0000'), rounding=ROUND_HALF_UP)})
         
         # Test value 1234567D (D = negative) with 2 decimal places
         comp3obj = FieldNumericComp3('NUMERIC_COMP3', 'FIELD-NUMERIC-COMP3', 4, 2)
         comp3obj.parse(self.comp3_negative_value)
-        self.assertEqual(comp3obj.value, {'FIELD-NUMERIC-COMP3': Decimal(-12345.67)})
+        self.assertEqual(comp3obj.value, {'FIELD-NUMERIC-COMP3': Decimal(-12345.67).quantize(Decimal('1.00'), rounding=ROUND_HALF_UP)})
         
         # Test value 1234567F (F = no signal) with 2 decimal places
         comp3obj = FieldNumericComp3('NUMERIC_COMP3', 'FIELD-NUMERIC-COMP3', 4, 2)
         comp3obj.parse(self.comp3_no_signal_value)
-        self.assertEqual(comp3obj.value, {'FIELD-NUMERIC-COMP3': Decimal(12345.67)})
+        self.assertEqual(comp3obj.value, {'FIELD-NUMERIC-COMP3': Decimal(12345.67).quantize(Decimal('1.00'), rounding=ROUND_HALF_UP)})
 
 
     # Verify later how could check it...

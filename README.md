@@ -111,6 +111,11 @@ Correct transfer modes prevent data corruption, particularly with binary data ty
 
 3. Testing: Check functionality with:
     ``` bash
+    # Install coverage first
+    python -m venv venv
+    source venv/bin/activate
+    pip install -r requirements
+
     # Running only the unittest
     python -m unittest discover
 
