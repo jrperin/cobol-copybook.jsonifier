@@ -12,7 +12,7 @@ authors = [
     { name = "Joao Roberto Perin" }
 ]
 classifiers = [
-  "Programming Language :: Python3"
+  "Programming Language :: Python"
 ]
 license = "MIT"
 keywords = ["Cobol", "Json", "Mainframe", "Copybook", "Cobol & JSON"]
