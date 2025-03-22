@@ -1,6 +1,9 @@
-import unittest
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 
-from coboljsonifier.fields.field_alphanumeric_ascii import FieldAlphanumericAscii
+import unittest
+from src.coboljsonifier.fields.field_alphanumeric_ascii import FieldAlphanumericAscii
 
 
 class TestFieldAlphanumericAscii(unittest.TestCase):

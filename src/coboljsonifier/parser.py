@@ -1,4 +1,3 @@
-
 from coboljsonifier.fields.field import Field
 from coboljsonifier.fields.field_alphanumeric_ascii import FieldAlphanumericAscii 
 from coboljsonifier.fields.field_alphanumeric_ebcdic import FieldAlphanumericEbcdic
@@ -29,18 +28,18 @@ class Parser:
     def _create(self, parent: Field, book_structure):
 
         '''
-            Logica do processo
-            receber um parent, e a estrutura de dicionario
-            - para cada item no dicionario, adicinar como filho
-                - Se o item for um objeto complexo
-                    - chamar recursivamente para adicionar os objetos do dict complexo
+            Process Logic
+            receive a parent and the dictionary structure
+            - for each item in the dictionary, add it as a child
+                - If the item is a complex object
+                    - call recursively to add the objects from the complex dict
         '''
 
         if len(book_structure) < 1:
-            print("Houve um erro para montar a estrutura do dicionário de dados do copybook!")
+            print("An error occurred while building the copybook data dictionary structure!")
             return
 
-        ''' SEMPRE TEM QUE SER UM DICT (WRAPPER) '''
+        ''' IT MUST ALWAYS BE A DICT (WRAPPER) '''
         for k in book_structure:
             if isinstance(book_structure[k], dict):
                 f = self._choose_instance(book_structure[k])
@@ -75,7 +74,7 @@ class Parser:
             elif self._parser_type == ParseType.BINARY_EBCDIC:
                 f = FieldAlphanumericEbcdic(value['type'], value['name'], value['size'])
             else:
-                raise Exception(f'ParseType invalido {self._parser_type}')
+                raise Exception(f'Invalid ParseType {self._parser_type}')
 
         elif value.get('type') == 'NUMERIC':
             if self._parser_type == ParseType.FLAT_ASCII:
@@ -83,7 +82,7 @@ class Parser:
             elif self._parser_type == ParseType.BINARY_EBCDIC:
                 f = FieldNumericEbcdic(value['type'], value['name'], value['size'], value['decimals'])
             else:
-                raise Exception(f'ParseType invalido {self._parser_type}')
+                raise Exception(f'Invalid ParseType {self._parser_type}')
 
         elif value.get('type') == 'NUMERIC_COMP3':
             f = FieldNumericComp3(value['type'], value['name'], value['size'], value['decimals'])
@@ -93,11 +92,9 @@ class Parser:
 
         elif value.get('type') == 'NUMERIC_MASKED':
             if self._parser_type != ParseType.FLAT_ASCII:
-                raise Exception(f'ParseType invalido {self._parser_type} soh pode ser usado com ParseType.FLAT_ASCII')
+                raise Exception(f'Invalid ParseType {self._parser_type} can only be used with ParseType.FLAT_ASCII')
             f = FieldNumericMaskedAscii(value['type'], value['name'], value['size'], value['decimals'])
 
         else:
-            raise Exception(f'Formato inválido {value.get("type")}')
+            raise Exception(f'Invalid format {value.get("type")}')
         return f
-
-

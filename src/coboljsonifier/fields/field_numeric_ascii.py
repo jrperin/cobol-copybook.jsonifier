@@ -23,7 +23,7 @@ class FieldNumericAscii(Field):
                 self._value = round(Decimal(self._value / 10 ** self.decimals), self.decimals)
         except Exception as e:
             print(e)
-            print(f"Erro ao tratar o campo: {self.name} com conteudo: [{data_in[:self._size]}]")
+            print(f"Error processing field: {self.name} with content: [{data_in[:self._size]}]")
             raise
 
         return data_in[self._size:]

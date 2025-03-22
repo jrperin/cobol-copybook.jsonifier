@@ -1,7 +1,10 @@
-import unittest
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 
-from coboljsonifier.extractors.book_item import BookItem
-from coboljsonifier.extractors.field_extractor import   FieldEmpty, FieldSimpleNumeric1Decimals2, FieldSimpleNumericDecimals1, FieldSimpleNumericDecimals2, \
+import unittest
+from src.coboljsonifier.extractors.book_item import BookItem
+from src.coboljsonifier.extractors.field_extractor import   FieldEmpty, FieldSimpleNumeric1Decimals2, FieldSimpleNumericDecimals1, FieldSimpleNumericDecimals2, \
                                                         FieldSimpleNumeric1Decimals2, FieldSignalNumeric1Decimals1, FieldSignalNumeric1Decimals2, \
                                                         FieldNumericMasked1, FieldAlphabetic, FieldAlphanumeric, FieldUndefined
 

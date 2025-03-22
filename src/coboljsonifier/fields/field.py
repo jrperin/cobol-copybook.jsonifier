@@ -5,10 +5,9 @@ from typing import Dict
 
 
 class Field(ABC):
-
     """
     Composite Pattern
-    Objetos em estruturas de árvores.
+    Objects in tree structures.
     """
 
     def __init__(self, type: str, name: str, size: int, decimals: int):
@@ -18,7 +17,6 @@ class Field(ABC):
         self.decimals = decimals
         self._value = None
         self.parent = None
-
 
     @property
     def parent(self) -> Field:
@@ -43,7 +41,7 @@ class Field(ABC):
 
     @property
     def value(self) -> Dict:
-        return {self.name : self._value }
+        return {self.name: self._value}
 
     @property
     def size(self) -> int:
