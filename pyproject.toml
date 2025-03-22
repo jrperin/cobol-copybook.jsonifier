@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "coboljsonifier"
-version = "1.0.7"
+dynamic = ["version"]
 description = "Convert cobol copybook to Json and parse data files based on it"
 readme = "README.md"
 requires-python = ">=3.7"
@@ -18,5 +18,13 @@ classifiers = [
 ]
 urls = { "Bug Tracker" = "https://github.com/jrperin/cobol-copybook.jsonifier/issues" }
 
-[project.dynamic]
-fields = ["description", "readme", "requires-python", "authors", "classifiers", "urls"]
+[project.urls]
+Homepage = "https://github.com/jrperin/cobol-copybook.jsonifier"
+# Documentation = "https://readthedocs.org"
+# Repository = "https://github.com/me/spam.git"
+Issues = "https://github.com/jrperin/cobol-copybook.jsonifier/issues"
+# Changelog = "https://github.com/me/spam/blob/master/CHANGELOG.md"
+
+license = {text = "MIT License"}
+
+keywords = ["Cobol", "Json", "Mainframe", "Copybook", "Cobol & JSON"]
