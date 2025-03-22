@@ -16,7 +16,6 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent"
 ]
-urls = { "Bug Tracker" = "https://github.com/jrperin/cobol-copybook.jsonifier/issues" }
 
 [project.urls]
 Homepage = "https://github.com/jrperin/cobol-copybook.jsonifier"
