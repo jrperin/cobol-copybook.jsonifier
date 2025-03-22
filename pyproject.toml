@@ -1,9 +1,27 @@
-[project]
-version = "1.0.7"
-name = "coboljsonifier"
 [build-system]
-requires=[
-    "setuptools>=42",
-    "wheel"
-]
+requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "coboljsonifier"
+version = "0.1.0"
+description = "Convert cobol copybook to Json and parse data files based on it"
+readme = "README.md"
+requires-python = ">=3.7"
+authors = [
+    { name = "Joao Roberto Perin" }
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+urls = { "Bug Tracker" = "https://github.com/jrperin/cobol-copybook.jsonifier/issues" }
+
+[project.dynamic]
+description = true
+readme = true
+requires-python = true
+authors = true
+classifiers = true
+urls = true
