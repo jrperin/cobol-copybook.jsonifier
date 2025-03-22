@@ -19,9 +19,4 @@ classifiers = [
 urls = { "Bug Tracker" = "https://github.com/jrperin/cobol-copybook.jsonifier/issues" }
 
 [project.dynamic]
-description = true
-readme = true
-requires-python = true
-authors = true
-classifiers = true
-urls = true
+fields = ["description", "readme", "requires-python", "authors", "classifiers", "urls"]
