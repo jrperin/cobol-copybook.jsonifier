@@ -6,7 +6,7 @@
 ### Changes
 
 * Treatment fields of type `X`, `A` and `9`
-* Treatment of the initializatior: `VALUE` _something_
+* Treatment of the initializer: `VALUE` _something_
 **E.g.:**
 ``` cobol
           05 FIELD01      PIC X VALUE SPACE.
