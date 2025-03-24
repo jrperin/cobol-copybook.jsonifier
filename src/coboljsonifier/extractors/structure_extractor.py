@@ -119,11 +119,17 @@ class SimpleFieldStructureExtractor(AbstractStructureExtractor):
 class SubformatStructureExtractor(AbstractStructureExtractor):
     def extract(self, line: str, field: Field):
         # Example:
-        # 05  VQBE-DAT-INI-ENDR             PIC S9(07) COMP-3.
-        # 05  VQBE-DAT-INI-ENDR             PIC S9(07) BINARY.
-        # 05  VQBE-DAT-INI-ENDR             PIC S9(07) COMP.
-        # 05  VQBE-DAT-INI-ENDR             PIC S9(07) USAGE COMP-3. <-- USAGE nao previsto...
+        # 05 TSTE-DAT-INI-ENDR             PIC S9(07) COMP-3.
+        # 05 TSTE-DAT-INI-ENDR             PIC S9(07) BINARY.
+        # 05 TSTE-DAT-INI-ENDR             PIC S9(07) COMP.
+        
+        # 05 TSTE-DAT-INI-ENDR             PIC S9(07) USAGE COMP-3. <-- USAGE not supported...
         line = line.replace("USAGE", "").replace("usage", "")
+        
+        # 05 TSTE-WELL-NUMBER              PIC X(06) VALUE SPACES.  <- VALUE SOMETHING not supported...
+        # 05 TSTE-LEASE-NAME               PIC X(32) VALUE SPACES.  <- VALUE SOMETHING not supported...
+        line = re.sub(r"VALUE\s+\w+", "", line)
+        
         m = re.search(r"^.{6}[^(*)]\s*([0-9]+)\s+([\w|-]*)\s+PIC\s+([\w|\(|\)]*)\s+([\w|-]*)\s*\..*$", line)
         if m:
             field.type = "FIELD"
@@ -142,7 +148,7 @@ class RedefinesStructureExtractor(AbstractStructureExtractor):
         # 03  :AMSL:-AMBS-DATA    REDEFINES :AMSL:-DATA.
         m = re.search(r"^.*REDEFINES.*$", line)
         if m:
-            raise Exception(f"Impossible to process book with REDEFINES \n\t==> {line}")
+            raise Exception(f"REDEFINES statement found in the copybook, which is not supported. Line: {line}")
         else:
             return super().extract(line, field)
 

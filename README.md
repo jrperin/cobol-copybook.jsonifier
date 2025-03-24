@@ -1,5 +1,7 @@
 # Cobol Copybook JSONifier 🚀
 
+![workflow status](https://github.com/jrperin/cobol-copybook.jsonifier/actions/workflows/python-publish.yml/badge.svg)
+
 [📜 CHANGELOG.md](https://github.com/jrperin/cobol-copybook.jsonifier/blob/master/CHANGELOG.md)
 
 ## ⚡ TL;DR 
@@ -109,22 +111,6 @@ Correct transfer modes prevent data corruption, particularly with binary data ty
     print(simplejson.dumps(dictvalue))
     ```
 
-3. Testing: Check functionality with:
-    ``` bash
-    # Install coverage first
-    python -m venv venv
-    source venv/bin/activate
-    pip install -r requirements
-
-    # Running only the unittest
-    python -m unittest discover
-
-    # Checking test coveraging
-    coverage run -m unittest discover
-    coverage report -m
-    coverage html
-    ```
-
 ## 7️⃣ 📚 Appendix 
 
 - Supported Data Types
@@ -155,11 +141,13 @@ Correct transfer modes prevent data corruption, particularly with binary data ty
          ZZZZZZZZZZZZZZ.ZZ                         some examples)                      
          99999999999999999                                                             
     -[Alphabetic]--------------------------------------------------------------------- 
-    10) A(12)                         FieldAlphabetic                   yes✅   yes✅  
+    10) A                             FieldSimpleAlphabetic             yes✅   yes✅  
+    11) A(12)                         FieldAlphabetic                   yes✅   yes✅  
     -[Alphanumeric]------------------------------------------------------------------- 
-    11) X(12)                         FieldAlphanumeric                 yes✅   yes✅  
+    11) X                             FieldSimpleAlphanumeric           yes✅   yes✅  
+    13) X(12)                         FieldAlphanumeric                 yes✅   yes✅  
     -[Undefined]---------------------------------------------------------------------- 
-    12) None of the above             FieldUndefined                    yes✅   yes✅  
+    99) None of the above             FieldUndefined                    yes✅   yes✅  
 =======================================================================================
 ```
 
