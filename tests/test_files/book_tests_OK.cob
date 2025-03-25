@@ -294,9 +294,9 @@
       *         State of Issue Code.
            03  :CLIDATA:-INT-STATUS                  PIC X(01).
       *         Internal Status.
-           03  :CLIDATA:-BLOCK-CODE-1                PIC X(01).
+           03  :CLIDATA:-BLK-CODE-1                  PIC X.
       *         Block Code 1.
-           03  :CLIDATA:-BLOCK-CODE-2                PIC X(01).
+           03  :CLIDATA:-BLK-CODE-2                  PIC A.
       *         Block Code 2.
            03  :CLIDATA:-BILLING-CYCLE               PIC 9(02).
       *         Billing Cycle.

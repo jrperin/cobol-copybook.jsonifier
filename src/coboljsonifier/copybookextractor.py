@@ -2,17 +2,18 @@ import os.path
 import re
 from typing import List
 
-from src.coboljsonifier.extractors.book_item import BookItem
-from src.coboljsonifier.extractors.field_extractor import FieldAlphabetic, FieldAlphanumeric, FieldArray, FieldEmpty, \
+from coboljsonifier.extractors.book_item import BookItem
+from coboljsonifier.extractors.field_extractor import FieldSimpleAlphabetic, FieldAlphabetic, FieldSimpleAlphanumeric, \
+    FieldAlphanumeric, FieldArray, FieldEmpty, \
     FieldGroup, FieldNumericMasked1, FieldSignalNumeric1, \
     FieldSignalNumeric1Decimals1, FieldSignalNumeric1Decimals2, \
     FieldSimpleNumeric, FieldSimpleNumeric1, FieldSimpleNumeric1Decimals1, \
     FieldSimpleNumeric1Decimals2, FieldSimpleNumericDecimals1, \
     FieldSimpleNumericDecimals2, FieldUndefined
-from src.coboljsonifier.extractors.structure_extractor import ArrayStructureExtractor, GroupStructureExtractor, RedefinesStructureExtractor, \
+from coboljsonifier.extractors.structure_extractor import ArrayStructureExtractor, GroupStructureExtractor, RedefinesStructureExtractor, \
     SimpleFieldStructureExtractor, SubformatStructureExtractor, \
     UndefinedStructureExtractor
-from src.coboljsonifier.extractors.subformat_extractor import BookItem, SubformatBinary, SubformatComp3, SubformatEmpty, SubformatUndefined
+from coboljsonifier.extractors.subformat_extractor import BookItem, SubformatBinary, SubformatComp3, SubformatEmpty, SubformatUndefined
 
 
 class CopybookExtractor:
@@ -82,7 +83,9 @@ class CopybookExtractor:
         field_signal_numeric1_decimals1 = FieldSignalNumeric1Decimals1()
         field_signal_numeric1_decimals2 = FieldSignalNumeric1Decimals2()
         field_numeric_masked1 = FieldNumericMasked1()
+        field_simple_alphabetic = FieldSimpleAlphabetic()
         field_alphabetic = FieldAlphabetic()
+        field_simple_alphanumeric = FieldSimpleAlphanumeric()
         field_alphanumeric = FieldAlphanumeric()
         field_undefined = FieldUndefined()
 
@@ -98,7 +101,9 @@ class CopybookExtractor:
             .set_next(field_signal_numeric1_decimals1) \
             .set_next(field_signal_numeric1_decimals2) \
             .set_next(field_numeric_masked1) \
+            .set_next(field_simple_alphabetic) \
             .set_next(field_alphabetic) \
+            .set_next(field_simple_alphanumeric) \
             .set_next(field_alphanumeric) \
             .set_next(field_undefined)
         field_group.extract(field)

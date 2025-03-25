@@ -1,0 +1,10 @@
+# Including only essential files to execute the lib
+include README.md
+include pyproject.toml
+include setup.cfg
+include setup.py
+
+# Exlude test directories or any other unwanted content
+prune tests
+prune docs
+prune examples

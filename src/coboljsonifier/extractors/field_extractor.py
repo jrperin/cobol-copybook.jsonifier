@@ -31,11 +31,13 @@ class FieldExtractor(ABC):
           - ZZZZZZZZZZZZZZ.ZZ
           - 99999999999999999
       -[Alphabetic]---------------------------------------------------------
-      10) A(12)      - A\([0-9]+\)              FieldAlphabetic
+      10) A          - A+                       FieldSimpleAlphabetic
+      11) A(12)      - A\([0-9]+\)              FieldAlphabetic
       -[Alphanumeric]-------------------------------------------------------
-      11) X(12)      - X\([0-9]+\)              FieldAlphanumeric
+      12) X          - X+                       FieldSimpleAlphanumeric
+      13) X(12)      - X\([0-9]+\)              FieldAlphanumeric
       -[Undefined]---------------------------------------------------------
-      12) None of the above                     FieldUndefined
+      99) None of the above                     FieldUndefined
     ===========================================================================
   
     '''
@@ -225,6 +227,18 @@ class FieldNumericMasked1(AbstractFieldExtractor):
             return super().extract(book_item)
 
 # 10
+class FieldSimpleAlphabetic(AbstractFieldExtractor):
+    def extract(self, book_item: BookItem):
+        m = re.search(r"^(A+)$", book_item.format, re.IGNORECASE)
+        if m:
+            book_item.type = "ALPHABETIC"
+            book_item.size = len(m.group(1))
+            book_item.decimals = 0
+            return book_item
+        else:
+            return super().extract(book_item)
+        
+# 11
 class FieldAlphabetic(AbstractFieldExtractor):
     def extract(self, book_item: BookItem):
         m = re.search(r"^A\(([0-9]+)\)$", book_item.format)
@@ -236,8 +250,19 @@ class FieldAlphabetic(AbstractFieldExtractor):
         else:
             return super().extract(book_item)
 
+# 12
+class FieldSimpleAlphanumeric(AbstractFieldExtractor):
+    def extract(self, book_item: BookItem):
+        m = re.search(r"^(X+)$", book_item.format, re.IGNORECASE)
+        if m:
+            book_item.type = "ALPHANUMERIC"
+            book_item.size = len(m.group(1))
+            book_item.decimals = 0
+            return book_item
+        else:
+            return super().extract(book_item)
 
-# 11
+# 13
 class FieldAlphanumeric(AbstractFieldExtractor):
     def extract(self, book_item: BookItem):
         m = re.search(r"^X\(([0-9]+)\)$", book_item.format)
@@ -250,7 +275,7 @@ class FieldAlphanumeric(AbstractFieldExtractor):
             return super().extract(book_item)
 
 
-# 12
+# 99
 class FieldUndefined(AbstractFieldExtractor):
     def extract(self, book_item: BookItem):
         raise Exception(f"ERROR processing field \n\t==> [{book_item.format}]")

@@ -1,9 +1,25 @@
+import os
 import simplejson
 from coboljsonifier.copybookextractor import CopybookExtractor
 from coboljsonifier.parser import Parser
 from coboljsonifier.config.parser_type_enum import ParseType
 
-bookfname='EBCDIC_BOOK.cob'
+current_directory = os.getcwd()
+print("Diretório atual:", current_directory)
+
+# bookfname='EBCDIC_BOOK.cob'
+bookfname = None
+for root, dirs, files in os.walk(current_directory):
+    if 'EBCDIC_BOOK.cob' in files:
+        bookfname = os.path.join(root, 'EBCDIC_BOOK.cob')
+        break
+
+if bookfname is None:
+    raise FileNotFoundError("File 'EBCDIC_BOOK.cob' not found!.")
+
+print("Full path and filename:", bookfname)
+
+
 
 dict_structure = CopybookExtractor(bookfname).dict_book_structure
 print(simplejson.dumps(dict_structure))
